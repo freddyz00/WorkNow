@@ -12,9 +12,9 @@ export default function Home() {
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > navRef?.current?.scrollHeight) {
-        navRef.current.classList.add("bg-white");
+        navRef?.current?.classList.add("bg-white");
       } else {
-        navRef.current.classList.remove("bg-white");
+        navRef?.current?.classList.remove("bg-white");
       }
     });
     return () => window.removeEventListener("scroll", () => {});
@@ -31,19 +31,19 @@ export default function Home() {
 
       {/*  */}
       <section className="flex h-screen py-12 bg-gradient-to-t from-blue-100 to-white justify-center">
-        <div className="container columns-2">
+        <div className="container columns-1 md:columns-2">
           {/* left */}
           <div className="flex flex-col justify-center items-start h-full w-full pl-24 pr-12">
-            <h1 className="text-5xl font-semibold leading-snug my-4">
+            <h1 className="text-3xl md:text-5xl font-semibold leading-snug my-4">
               Collaboration Made Simple.
             </h1>
-            <p className="text-xl mb-4">
+            <p className="text-lg md:text-xl mb-4">
               Manage all of your organization's projects, tasks, and activities.
               All your members, All in one place.
             </p>
             <Link href="/signup">
               <a>
-                <Button title="Get started for free" large />
+                <Button title="Get started for free" large type="primary" />
               </a>
             </Link>
           </div>

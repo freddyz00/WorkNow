@@ -20,14 +20,14 @@ export default function NavBar({ navRef }) {
           <li className="mx-2">
             <Link href="/login">
               <a>
-                <Button title="Sign In" />
+                <Button title="Sign In" type="primary" />
               </a>
             </Link>
           </li>
           <li className="mx-2">
             <Link href="/signup">
               <a>
-                <Button title="Sign Up" />
+                <Button title="Sign Up" type="primary" />
               </a>
             </Link>
           </li>
