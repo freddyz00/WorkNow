@@ -14,9 +14,12 @@ export default function Button({ title, large, type, icon, onPress }) {
         {
           "text-xl px-8 py-3": large,
         },
-        { "bg-indigo-600 hover:bg-indigo-700 text-white": type === "primary" },
         {
-          "bg-white hover:bg-slate-100 border-2 border-slate-500 border-solid":
+          "bg-indigo-600 hover:bg-indigo-700 text-white border border-indigo-600 border-solid":
+            type === "primary",
+        },
+        {
+          "bg-white hover:bg-slate-100 border border-slate-500 border-solid":
             type === "secondary",
         }
       )}

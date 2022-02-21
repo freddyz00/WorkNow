@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 import Button from "../components/Button";
 
@@ -7,20 +8,19 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const signIn = (e) => {
-    e.preventDefault();
-  };
-
-  const signInWithGoogle = (e) => {
-    e.preventDefault();
+  const signInWithGoogle = () => {
+    signIn("google", { callbackUrl: "/dashboard" });
   };
 
   return (
-    <div className="h-full grid bg-slate-100">
+    <div className="h-full grid bg-slate-50">
       <div className="flex flex-col justify-center items-center my-10">
         <Link href="/">
           <a>
-            <h1 className="text-3xl font-bold mb-8">Logo</h1>
+            <h1 className="font-righteous text-3xl mb-8">
+              <span className="text-yellow-500">Work</span>
+              <span className="text-pink-500">Now</span>
+            </h1>
           </a>
         </Link>
         <div className="flex flex-col w-1/3 p-14 border-2 border-slate-200 border-solid rounded-md shadow-[0_0px_5px_0px_rgba(0,0,0,0.1)]">

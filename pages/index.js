@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <div className="mx-auto">
       <Head>
-        <title>My app</title>
+        <title>WorkNow</title>
       </Head>
 
       {/* nav bar */}
@@ -59,6 +59,14 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <div>sakdfj</div>
+      <div>sakdfj</div>
+      <div>sakdfj</div>
+      <div>sakdfj</div>
+      <div>sakdfj</div>
+      <div>sakdfj</div>
+      <div>sakdfj</div>
+      <div>sakdfj</div>
     </div>
   );
 }

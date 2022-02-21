@@ -16,11 +16,14 @@ export default function Login() {
   };
 
   return (
-    <div className="h-full grid">
+    <div className="h-full grid bg-slate-50">
       <div className="flex flex-col justify-center items-center my-10">
         <Link href="/">
           <a>
-            <h1 className="text-3xl font-bold mb-8">Logo</h1>
+            <h1 className="font-righteous text-3xl mb-8">
+              <span className="text-yellow-500">Work</span>
+              <span className="text-pink-500">Now</span>
+            </h1>
           </a>
         </Link>
         <div className="flex flex-col w-1/3 p-14 border-2 border-slate-200 border-solid rounded-md shadow-[0_0px_5px_0px_rgba(0,0,0,0.1)]">
@@ -51,7 +54,7 @@ export default function Login() {
               className="border-2 border-slate-200 border-solid rounded-full px-5 py-2 mb-8"
             />
             <Button
-              title="Sign In"
+              title="Sign Up"
               extraStyle="py-2"
               type="primary"
               onPress={signIn}

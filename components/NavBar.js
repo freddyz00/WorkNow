@@ -11,7 +11,10 @@ export default function NavBar({ navRef }) {
       <div>
         <Link href="/">
           <a>
-            <h1>DoItNow</h1>
+            <h1 className="font-righteous text-3xl">
+              <span className="text-yellow-500">Work</span>
+              <span className="text-pink-500">Now</span>
+            </h1>
           </a>
         </Link>
       </div>
@@ -27,7 +30,7 @@ export default function NavBar({ navRef }) {
           <li className="mx-2">
             <Link href="/signup">
               <a>
-                <Button title="Sign Up" type="primary" />
+                <Button title="Sign Up" type="secondary" />
               </a>
             </Link>
           </li>
