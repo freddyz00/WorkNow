@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       fontFamily: {
         righteous: "Righteous",
+        roboto: "Roboto",
       },
     },
   },

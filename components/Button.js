@@ -1,5 +1,5 @@
 import cn from "classnames";
-import Image from "next/Image";
+import Image from "next/image";
 
 export default function Button({ title, large, type, icon, onPress }) {
   return (
