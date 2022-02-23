@@ -2,7 +2,14 @@ import Card from "./Card";
 import cn from "classnames";
 import { useState, useRef } from "react";
 
-export default function List({ title, listItems, addItem, theme }) {
+export default function List({
+  id,
+  title,
+  listItems,
+  theme,
+  addItem,
+  updateListTitle,
+}) {
   const newItemInputRef = useRef();
   const titleRef = useRef();
   const [titleInput, setTitleInput] = useState(title);
@@ -15,6 +22,8 @@ export default function List({ title, listItems, addItem, theme }) {
 
   const handleSubmitTitle = (e) => {
     e.preventDefault();
+    updateListTitle(id, titleInput);
+    titleRef.current.blur();
   };
 
   return (

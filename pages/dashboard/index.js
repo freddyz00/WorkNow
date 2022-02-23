@@ -46,6 +46,20 @@ export default function Dashboard({ _session }) {
     ]);
   };
 
+  const updateListTitle = (id, title) => {
+    const listToUpdate = dummyData.filter((list) => list.id === id)[0];
+    const otherlists = dummyData.filter((list) => list.id !== id);
+    setDummyData(
+      [...otherlists, { ...listToUpdate, title: title }].sort(
+        (list1, list2) => list1.id > list2.id
+      )
+    );
+  };
+
+  useEffect(() => {
+    console.log(dummyData);
+  }, [dummyData]);
+
   useEffect(() => {
     if (!_session) {
       router.push("/login");
@@ -60,13 +74,15 @@ export default function Dashboard({ _session }) {
         <title>WorkNow</title>
       </Head>
       <div className="inline-flex">
-        {dummyData.map(({ title, theme, items }, index) => (
+        {dummyData.map(({ id, title, theme, items }) => (
           <List
-            key={index}
+            id={id}
+            key={id}
             title={title}
             listItems={items}
             theme={theme}
             addItem={addItem}
+            updateListTitle={updateListTitle}
           />
         ))}
         <NewList addNewList={addNewList} />
