@@ -1,12 +1,19 @@
-import List from "../../components/List";
-import { useState } from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+
 import NewList from "../../components/NewList";
+import List from "../../components/List";
+import Button from "../../components/Button";
+
+import { signOut, getSession } from "next-auth/react";
 
 import randomColorGenerator from "../../utils";
+import Loading from "../../components/Loading";
 
 let count = 4;
 
-export default function Dashboard() {
+export default function Dashboard({ _session }) {
   const [dummyData, setDummyData] = useState([
     {
       id: 1,
@@ -17,6 +24,7 @@ export default function Dashboard() {
     { id: 2, title: "Doing", theme: "rgb(249 168 212)", items: [] },
     { id: 3, title: "Done", theme: "rgb(134 239 172)", items: [] },
   ]);
+  const router = useRouter();
 
   const addItem = (title, value) => {
     if (value) {
@@ -38,8 +46,19 @@ export default function Dashboard() {
     ]);
   };
 
+  useEffect(() => {
+    if (!_session) {
+      router.push("/login");
+    }
+  }, []);
+
+  if (!_session) return <Loading />;
+
   return (
     <div className="h-screen overflow-x-scroll">
+      <Head>
+        <title>WorkNow</title>
+      </Head>
       <div className="inline-flex">
         {dummyData.map(({ title, theme, items }, index) => (
           <List
@@ -51,7 +70,15 @@ export default function Dashboard() {
           />
         ))}
         <NewList addNewList={addNewList} />
+        <Button title="Logout" type="primary" onPress={() => signOut()} />
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  return {
+    props: { _session: session },
+  };
 }

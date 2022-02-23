@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -17,6 +18,9 @@ export default function Login() {
 
   return (
     <div className="h-full grid bg-slate-50">
+      <Head>
+        <title>Sign Up</title>
+      </Head>
       <div className="flex flex-col justify-center items-center my-10">
         <Link href="/">
           <a>
@@ -31,7 +35,7 @@ export default function Login() {
             <h2 className="text-center mb-5 font-bold text-xl">
               Sign up for an account
             </h2>
-            <label for="signUpEmail" className="hidden">
+            <label htmlFor="signUpEmail" className="hidden">
               Email
             </label>
             <input
@@ -42,7 +46,7 @@ export default function Login() {
               placeholder="Enter your email address"
               className="border-2 border-slate-200 border-solid rounded-full px-5 py-2 mb-8"
             />
-            <label for="signUpPassword" className="hidden">
+            <label htmlFor="signUpPassword" className="hidden">
               Password
             </label>
             <input

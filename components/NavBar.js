@@ -6,7 +6,7 @@ export default function NavBar({ navRef }) {
   return (
     <nav
       ref={navRef}
-      class="h-16 w-full flex flex-row justify-between items-center px-20 fixed top-0 transition-background duration-300 z-10"
+      className="h-16 w-full flex flex-row justify-between items-center px-20 fixed top-0 transition-background duration-300 z-10"
     >
       <div>
         <Link href="/">
@@ -19,7 +19,7 @@ export default function NavBar({ navRef }) {
         </Link>
       </div>
       <div>
-        <ul class="flex flex-row">
+        <ul className="flex flex-row">
           <li className="mx-2">
             <Link href="/login">
               <a>

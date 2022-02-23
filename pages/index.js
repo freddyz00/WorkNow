@@ -1,13 +1,17 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import { getSession, useSession } from "next-auth/react";
+import { useState, useEffect, useRef } from "react";
 
 import NavBar from "../components/NavBar";
 import Button from "../components/Button";
+import Loading from "../components/Loading";
 import Link from "next/link";
 
-export default function Home() {
+export default function Home({ _session }) {
   const navRef = useRef();
+  const router = useRouter();
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -19,6 +23,14 @@ export default function Home() {
     });
     return () => window.removeEventListener("scroll", () => {});
   }, []);
+
+  useEffect(() => {
+    if (_session) {
+      router.push("/dashboard");
+    }
+  }, []);
+
+  if (_session) return <Loading />;
 
   return (
     <div className="mx-auto">
@@ -69,4 +81,9 @@ export default function Home() {
       <div>sakdfj</div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  return { props: { _session: session } };
 }
