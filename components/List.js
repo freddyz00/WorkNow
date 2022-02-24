@@ -1,4 +1,4 @@
-import Card from "./Card";
+import ListItemCard from "./ListItemCard";
 import cn from "classnames";
 import { useState, useRef } from "react";
 
@@ -18,6 +18,7 @@ export default function List({
     e.preventDefault();
     addItem(title, newItemInputRef.current.value);
     newItemInputRef.current.value = "";
+    newItemInputRef.current.blur();
   };
 
   const handleSubmitTitle = (e) => {
@@ -27,8 +28,8 @@ export default function List({
   };
 
   return (
-    <div className="flex flex-col m-3 rounded-b-md">
-      <div id="color" className={cn("h-3")} />
+    <div className="flex flex-col m-3 rounded-b-md h-fit shadow-md">
+      <div id="color" className="h-3" />
       <div className="flex flex-col w-80 h-fit p-3 bg-slate-100 border border-solid border-slate-200 rounded-b-md transition ease-out duration-300">
         <form onSubmit={handleSubmitTitle}>
           <input
@@ -41,7 +42,7 @@ export default function List({
           />
         </form>
         {listItems?.map((item, index) => (
-          <Card key={index} item={item} />
+          <ListItemCard key={index} item={item} />
         ))}
         <form onSubmit={handleSubmitNewItem}>
           <input

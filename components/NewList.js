@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import randomColorGenerator from "../utils";
+import randomColorGenerator from "../lib/utils";
 
 export default function NewList({ addNewList }) {
   const titleRef = useRef();

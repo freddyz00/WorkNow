@@ -1,24 +1,18 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
-
-import NewList from "../../components/NewList";
-import List from "../../components/List";
-import Button from "../../components/Button";
-import SideMenu from "../../components/SideMenu";
+import { useEffect, useState } from "react";
 
 import { signOut, getSession } from "next-auth/react";
 
-import randomColorGenerator from "../../utils";
+import randomColorGenerator from "../../lib/utils";
 import Loading from "../../components/Loading";
-import DashboardHeader from "../../components/DashboardHeader";
+import WorkspaceHeader from "../../components/WorkspaceHeader";
 import Board from "../../components/Board";
 
 let count = 4;
 
 export default function Workspace({ _session }) {
   const { user } = _session;
-  const headerRef = useRef();
   const [dummyData, setDummyData] = useState([
     {
       id: 1,
@@ -75,12 +69,12 @@ export default function Workspace({ _session }) {
         <title>WorkNow</title>
       </Head>
 
-      <div>
+      {/* <div>
         <SideMenu />
-      </div>
+      </div> */}
 
       <div className="flex flex-col flex-1 h-screen overflow-hidden">
-        <DashboardHeader user={user} />
+        <WorkspaceHeader user={user} />
         <Board
           dummyData={dummyData}
           addItem={addItem}

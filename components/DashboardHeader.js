@@ -1,12 +1,23 @@
 import Image from "next/image";
-import { useRef, useEffect } from "react";
 
 export default function DashboardHeader({ user }) {
   return (
-    <div className="flex justify-between items-center px-3 py-2 bg-slate-100">
-      <p>Board</p>
+    <div className="grid grid-cols-3 items-center px-5 py-2 border-solid border-[#EEEEEE] border-b-2 shadow-sm">
+      <p className="font-righteous text-2xl justify-self-start">
+        <span className="text-yellow-500">Work</span>
+        <span className="text-pink-500">Now</span>
+      </p>
 
-      <Image src={user.image} width="35" height="35" className="rounded-full" />
+      <p className="justify-self-center text-xl font-medium">Workspaces</p>
+
+      <div className="flex justify-self-end">
+        <Image
+          src={user.image}
+          width="35"
+          height="35"
+          className="rounded-full cursor-pointer"
+        />
+      </div>
     </div>
   );
 }

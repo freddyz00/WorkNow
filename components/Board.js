@@ -9,7 +9,7 @@ export default function Board({
   addNewList,
 }) {
   return (
-    <div className="flex flex-1 overflow-x-scroll">
+    <div className="flex flex-1 overflow-x-scroll px-5">
       {dummyData.map(({ id, title, theme, items }) => (
         <List
           id={id}
@@ -22,7 +22,6 @@ export default function Board({
         />
       ))}
       <NewList addNewList={addNewList} />
-      {/* <Button title="Logout" type="primary" onPress={() => signOut()} /> */}
     </div>
   );
 }
