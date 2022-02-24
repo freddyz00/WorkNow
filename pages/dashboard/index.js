@@ -1,17 +1,21 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, useRef } from "react";
 import { getSession } from "next-auth/react";
 
 import randomColorGenerator from "../../lib/utils";
 
+import Button from "../../components/Button";
 import Loading from "../../components/Loading";
 import DashboardHeader from "../../components/DashboardHeader";
 import WorkspaceCard from "../../components/WorkspaceCard";
 
+import { IoMdClose } from "react-icons/io";
+import ReactModal from "react-modal";
+
 export default function Workspace({ _session }) {
-  const { user } = _session;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [workspaceInput, setWorkspaceInput] = useState("New Workspace");
   const [workspaces, setWorkspaces] = useState([
     {
       id: "jksoqueitjklJWijf",
@@ -52,6 +56,15 @@ export default function Workspace({ _session }) {
 
   const router = useRouter();
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setWorkspaceInput("New Workspace");
+  };
+
+  const createNewWorkspace = () => {
+    handleCloseModal();
+  };
+
   useEffect(() => {
     if (!_session) {
       router.push("/login");
@@ -66,7 +79,7 @@ export default function Workspace({ _session }) {
         <title>WorkNow</title>
       </Head>
 
-      <DashboardHeader user={user} />
+      <DashboardHeader user={_session.user} />
       <div className="grid grid-cols-4">
         {workspaces.map(({ id, title, theme }) => (
           <WorkspaceCard id={id} key={id} title={title} theme={theme} />
@@ -75,8 +88,67 @@ export default function Workspace({ _session }) {
           title="Create a new workspace"
           theme="rgb(225 225 225)"
           newWorkspace
+          showModal={() => setIsModalOpen(true)}
         />
       </div>
+      <ReactModal
+        isOpen={isModalOpen}
+        onRequestClose={handleCloseModal}
+        shouldCloseOnOverlayClick={true}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+          },
+          content: {
+            borderRadius: "10px",
+            top: "10%",
+            left: "30%",
+            right: "30%",
+            bottom: "10%",
+          },
+        }}
+      >
+        <div className="flex h-full justify-between flex-col p-3">
+          {/* header */}
+          <div className="flex justify-between items-center">
+            <p className="text-3xl font-semibold">Create New Workspace</p>
+            <div
+              onClick={handleCloseModal}
+              className="p-1 hover:bg-slate-200 cursor-pointer rounded-md"
+            >
+              <IoMdClose className="text-2xl" />
+            </div>
+          </div>
+
+          {/* workspace image */}
+          <div className="flex justify-center items-center self-center w-28 h-28 bg-red-500 rounded-xl">
+            <p className="text-5xl text-white font-bold">
+              {workspaceInput[0].toUpperCase()}
+            </p>
+          </div>
+
+          {/* form input */}
+          <form className="flex flex-col">
+            <label htmlFor="workspaceInput">Workspace Name</label>
+            <input
+              id="workspaceInput"
+              type="text"
+              value={workspaceInput}
+              onChange={(e) => setWorkspaceInput(e.target.value)}
+              className="py-2 px-3 mt-2 rounded-md border-solid border-2 border-slate-300"
+            />
+          </form>
+
+          {/* footer */}
+          <div className="flex justify-end">
+            <Button
+              title="Create Workspace"
+              type="primary"
+              onPress={createNewWorkspace}
+            />
+          </div>
+        </div>
+      </ReactModal>
     </div>
   );
 }

@@ -33,7 +33,7 @@ export default function Home({ _session }) {
   if (_session) return <Loading />;
 
   return (
-    <div className="mx-auto">
+    <div>
       <Head>
         <title>WorkNow</title>
       </Head>
@@ -42,7 +42,7 @@ export default function Home({ _session }) {
       <NavBar navRef={navRef} />
 
       {/*  */}
-      <section className="flex h-screen py-12 bg-gradient-to-t from-blue-100 to-white justify-center">
+      <section className="flex h-screen py-12 bg-gradient-to-t from-blue-100 to-white justify-center mb-16">
         <div className="container columns-1 md:columns-2">
           {/* left */}
           <div className="flex flex-col justify-center items-start h-full w-full pl-24 pr-12">
@@ -71,14 +71,28 @@ export default function Home({ _session }) {
           </div>
         </div>
       </section>
-      <div>sakdfj</div>
-      <div>sakdfj</div>
-      <div>sakdfj</div>
-      <div>sakdfj</div>
-      <div>sakdfj</div>
-      <div>sakdfj</div>
-      <div>sakdfj</div>
-      <div>sakdfj</div>
+
+      <section className="container mx-auto">
+        <h2 className="text-3xl font-semibold mx-20 text-center"></h2>
+      </section>
+
+      <section className="container mx-auto grid grid-cols-2 mb-12">
+        <div className="justify-self-center">
+          <p>Boost your productivity by keeping track of all tasks</p>
+        </div>
+        <div className="justify-self-center">
+          <p>image goes here</p>
+        </div>
+      </section>
+
+      <section className="container mx-auto grid grid-cols-2 mb-12">
+        <div className="justify-self-center">
+          <p>image goes here</p>
+        </div>
+        <div className="justify-self-center">
+          <p>Seamless communication between your team</p>
+        </div>
+      </section>
     </div>
   );
 }

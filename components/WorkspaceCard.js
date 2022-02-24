@@ -1,13 +1,20 @@
 import { useRouter } from "next/router";
 
-export default function WorkspaceCard({ id, title, theme, newWorkspace }) {
+export default function WorkspaceCard({
+  id,
+  title,
+  theme,
+  newWorkspace,
+  showModal,
+}) {
   const router = useRouter();
 
   const handlePress = () => {
     if (!newWorkspace) {
       router.push(`/dashboard/${id}`);
     } else {
-      // create workspace
+      // show modal to create new workspace
+      showModal();
     }
   };
   return (

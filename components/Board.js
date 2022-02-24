@@ -1,6 +1,7 @@
 import List from "./List";
 import NewList from "./NewList";
-import Button from "./Button";
+import Button from "../components/Button";
+import { signOut } from "next-auth/react";
 
 export default function Board({
   dummyData,
@@ -22,6 +23,10 @@ export default function Board({
         />
       ))}
       <NewList addNewList={addNewList} />
+      <Button
+        title="Sign Out"
+        onPress={() => signOut({ callbackUrl: "/dashboard" })}
+      />
     </div>
   );
 }

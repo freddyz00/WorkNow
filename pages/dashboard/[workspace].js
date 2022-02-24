@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { signOut, getSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 import randomColorGenerator from "../../lib/utils";
 import Loading from "../../components/Loading";
