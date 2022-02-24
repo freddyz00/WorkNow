@@ -42,7 +42,7 @@ export default function Home({ _session }) {
       <NavBar navRef={navRef} />
 
       {/*  */}
-      <section className="flex h-screen py-12 bg-gradient-to-t from-blue-100 to-white justify-center mb-16">
+      <section className="flex h-screen py-12 bg-gradient-to-t from-blue-100 to-white justify-center mb-28">
         <div className="container columns-1 md:columns-2">
           {/* left */}
           <div className="flex flex-col justify-center items-start h-full w-full pl-24 pr-12">
@@ -72,25 +72,56 @@ export default function Home({ _session }) {
         </div>
       </section>
 
-      <section className="container mx-auto">
-        <h2 className="text-3xl font-semibold mx-20 text-center"></h2>
+      <section className="container mx-auto mb-28">
+        <h2 className="text-3xl font-semibold mx-20 text-center mb-5">
+          Keep all your work neat, clean, and organized.
+        </h2>
+        <p className="mx-20 text-xl text-center mb-5">
+          Achieve greater work efficiency by integrating different tools into
+          your workflow
+        </p>
+        <div className="mx-20 text-center ">
+          <Link href="/signup">
+            <a>
+              <Button title="Start Working" type="primary" large />
+            </a>
+          </Link>
+        </div>
       </section>
 
-      <section className="container mx-auto grid grid-cols-2 mb-12">
-        <div className="justify-self-center">
-          <p>Boost your productivity by keeping track of all tasks</p>
+      <section className="container mx-auto grid grid-cols-2 mb-28 place-items-center">
+        <div className="justify-self-center ml-20">
+          <p className="text-3xl font-semibold mb-5">
+            Boost your productivity by keeping track of your tasks
+          </p>
+          <p className="text-xl">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum
+            veniam omnis, velit dolore ducimus natus distinctio saepe nesciunt
+            provident iste.
+          </p>
         </div>
         <div className="justify-self-center">
-          <p>image goes here</p>
+          <Image src="/images/to-do.png" height="350" width="350" />
         </div>
       </section>
 
-      <section className="container mx-auto grid grid-cols-2 mb-12">
+      <section className="container mx-auto grid grid-cols-2 mb-28 place-items-center">
         <div className="justify-self-center">
-          <p>image goes here</p>
+          <Image
+            src="/images/chat-functionality.png"
+            height="350"
+            width="350"
+          />
         </div>
-        <div className="justify-self-center">
-          <p>Seamless communication between your team</p>
+        <div className="justify-self-center mr-20">
+          <p className="text-3xl font-semibold mb-5">
+            Seamless communication between your team
+          </p>
+          <p className="text-xl">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
+            officia tenetur odit animi dicta, amet repellat laudantium nam.
+            Voluptate, architecto?
+          </p>
         </div>
       </section>
     </div>
