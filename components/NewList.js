@@ -1,10 +1,10 @@
 import { useRef } from "react";
-import randomColorGenerator from "../lib/utils";
+import { lightColorGenerator } from "../lib/utils";
 
 export default function NewList({ addNewList }) {
   const titleRef = useRef();
 
-  const theme = randomColorGenerator.generate();
+  const theme = lightColorGenerator.generate();
 
   const handleSubmit = (e) => {
     e.preventDefault();

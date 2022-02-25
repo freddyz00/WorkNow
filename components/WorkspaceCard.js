@@ -1,3 +1,4 @@
+import cn from "classnames";
 import { useRouter } from "next/router";
 
 export default function WorkspaceCard({
@@ -24,7 +25,13 @@ export default function WorkspaceCard({
         "card flex shrink-0 justify-center items-center h-40 m-5 rounded-lg shadow-md cursor-pointer"
       }
     >
-      <p className="text-2xl font-semibold">{title}</p>
+      <p
+        className={cn("text-2xl font-semibold", {
+          "text-white": !newWorkspace,
+        })}
+      >
+        {title}
+      </p>
 
       <style jsx>{`
         .card {

@@ -1,9 +1,9 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { getSession } from "next-auth/react";
 
-import randomColorGenerator from "../../lib/utils";
+import { darkColorGenerator } from "../../lib/utils";
 
 import Button from "../../components/Button";
 import Loading from "../../components/Loading";
@@ -13,56 +13,73 @@ import WorkspaceCard from "../../components/WorkspaceCard";
 import { IoMdClose } from "react-icons/io";
 import ReactModal from "react-modal";
 
-export default function Workspace({ _session }) {
+import axios from "axios";
+import clientPromise from "../../lib/mongodb";
+
+export default function Workspace({ _session, isConnected, workspaces }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [workspaceInput, setWorkspaceInput] = useState("New Workspace");
-  const [workspaces, setWorkspaces] = useState([
-    {
-      id: "jksoqueitjklJWijf",
-      title: "My Workspace 1",
-      theme: randomColorGenerator.generate(),
-    },
-    {
-      id: "rwerdsafdeqr",
-      title: "My Workspace 2",
-      theme: randomColorGenerator.generate(),
-    },
-    {
-      id: "sfdsafewrwer",
-      title: "My Workspace 3",
-      theme: randomColorGenerator.generate(),
-    },
-    {
-      id: "sdfasfas",
-      title: "My Workspace 4",
-      theme: randomColorGenerator.generate(),
-    },
-    {
-      id: "qwerwqersfa",
-      title: "My Workspace 5",
-      theme: randomColorGenerator.generate(),
-    },
-    {
-      id: "sdf",
-      title: "My Workspace 6",
-      theme: randomColorGenerator.generate(),
-    },
-    {
-      id: "asdfadqe",
-      title: "My Workspace 7",
-      theme: randomColorGenerator.generate(),
-    },
-  ]);
+  const [workspaceColor, setWorkSpaceColor] = useState(
+    darkColorGenerator.generate()
+  );
+  // const [workspaces, setWorkspaces] = useState([
+  //   {
+  //     id: "jksoqueitjklJWijf",
+  //     title: "My Workspace 1",
+  //     theme: randomColorGenerator.generate(),
+  //   },
+  //   {
+  //     id: "rwerdsafdeqr",
+  //     title: "My Workspace 2",
+  //     theme: randomColorGenerator.generate(),
+  //   },
+  //   // {
+  //   //   id: "sfdsafewrwer",
+  //   //   title: "My Workspace 3",
+  //   //   theme: randomColorGenerator.generate(),
+  //   // },
+  //   // {
+  //   //   id: "sdfasfas",
+  //   //   title: "My Workspace 4",
+  //   //   theme: randomColorGenerator.generate(),
+  //   // },
+  //   // {
+  //   //   id: "qwerwqersfa",
+  //   //   title: "My Workspace 5",
+  //   //   theme: randomColorGenerator.generate(),
+  //   // },
+  //   // {
+  //   //   id: "sdf",
+  //   //   title: "My Workspace 6",
+  //   //   theme: randomColorGenerator.generate(),
+  //   // },
+  //   // {
+  //   //   id: "asdfadqe",
+  //   //   title: "My Workspace 7",
+  //   //   theme: randomColorGenerator.generate(),
+  //   // },
+  // ]);
 
   const router = useRouter();
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setWorkspaceInput("New Workspace");
+    setWorkSpaceColor(darkColorGenerator.generate());
   };
 
-  const createNewWorkspace = () => {
+  const createNewWorkspace = async () => {
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/newworkspace`,
+      {
+        userId: _session.user.id,
+        title: workspaceInput,
+        theme: workspaceColor,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
     handleCloseModal();
+    router.push(`/dashboard/${res.data.id}`);
   };
 
   useEffect(() => {
@@ -97,7 +114,7 @@ export default function Workspace({ _session }) {
         shouldCloseOnOverlayClick={true}
         style={{
           overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
           },
           content: {
             borderRadius: "10px",
@@ -121,7 +138,7 @@ export default function Workspace({ _session }) {
           </div>
 
           {/* workspace image */}
-          <div className="flex justify-center items-center self-center w-28 h-28 bg-red-500 rounded-xl">
+          <div className="workspace-color flex justify-center items-center self-center w-28 h-28 rounded-xl">
             <p className="text-5xl text-white font-bold">
               {workspaceInput[0].toUpperCase()}
             </p>
@@ -147,6 +164,11 @@ export default function Workspace({ _session }) {
               onPress={createNewWorkspace}
             />
           </div>
+          <style jsx>{`
+            .workspace-color {
+              background-color: ${workspaceColor};
+            }
+          `}</style>
         </div>
       </ReactModal>
     </div>
@@ -155,7 +177,28 @@ export default function Workspace({ _session }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  return {
-    props: { _session: session },
-  };
+  try {
+    const client = await clientPromise;
+    const db = await client.db();
+
+    const user = await db
+      .collection("users")
+      .findOne({ email: session.user.email });
+
+    const workspaces = user.workspaces || [];
+
+    return {
+      props: {
+        _session: {
+          ...session,
+          user: { ...session.user, id: user._id.toString() },
+        },
+        isConnected: true,
+        workspaces,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return { props: { _session: session, isConnected: false } };
+  }
 }

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 import { getSession } from "next-auth/react";
 
-import randomColorGenerator from "../../lib/utils";
 import Loading from "../../components/Loading";
 import WorkspaceHeader from "../../components/WorkspaceHeader";
 import Board from "../../components/Board";
@@ -41,7 +40,7 @@ export default function Workspace({ _session }) {
   const addNewList = ({ title, theme }) => {
     setDummyData([
       ...dummyData,
-      { id: count++, title, theme: randomColorGenerator.generate(), items: [] },
+      { id: count++, title, theme: theme, items: [] },
     ]);
   };
 
