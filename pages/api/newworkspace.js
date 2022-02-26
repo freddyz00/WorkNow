@@ -11,7 +11,11 @@ export default async function handler(req, res) {
     const result = await db.collection("workspaces").insertOne({
       title,
       theme,
-      items: [],
+      lists: [
+        { id: 1, title: "To-Do", theme: "rgb(147 197 253)", items: [] },
+        { id: 2, title: "Doing", theme: "rgb(249 168 212)", items: [] },
+        { id: 3, title: "Done", theme: "rgb(134 239 172)", items: [] },
+      ],
     });
 
     const workspaceId = result.insertedId.toString();

@@ -7,22 +7,21 @@ import { getSession } from "next-auth/react";
 import Loading from "../../components/Loading";
 import WorkspaceHeader from "../../components/WorkspaceHeader";
 import Board from "../../components/Board";
+import SideMenu from "../../components/SideMenu";
+
+import clientPromise from "../../lib/mongodb";
+import { ObjectId } from "mongodb";
+
+import axios from "axios";
 
 let count = 4;
 
-export default function Workspace({ _session }) {
+export default function Workspace({ _session, lists }) {
   const { user } = _session;
-  const [dummyData, setDummyData] = useState([
-    {
-      id: 1,
-      title: "To-Do",
-      theme: "rgb(147 197 253)",
-      items: [],
-    },
-    { id: 2, title: "Doing", theme: "rgb(249 168 212)", items: [] },
-    { id: 3, title: "Done", theme: "rgb(134 239 172)", items: [] },
-  ]);
+  const [dummyData, setDummyData] = useState(lists);
+  const [showSideMenu, setShowSideMenu] = useState(false);
   const router = useRouter();
+  const { workspace: workspaceId } = router.query;
 
   const addItem = (title, value) => {
     if (value) {
@@ -37,11 +36,19 @@ export default function Workspace({ _session }) {
     }
   };
 
-  const addNewList = ({ title, theme }) => {
-    setDummyData([
-      ...dummyData,
-      { id: count++, title, theme: theme, items: [] },
-    ]);
+  const addNewList = async ({ title, theme }) => {
+    // setDummyData([...dummyData, { id: count, title, theme, items: [] }]);
+
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/newlist`,
+      {
+        id: count,
+        workspaceId,
+        title,
+        theme,
+      }
+    );
+    count++;
   };
 
   const updateListTitle = (id, title) => {
@@ -68,12 +75,17 @@ export default function Workspace({ _session }) {
         <title>WorkNow</title>
       </Head>
 
-      {/* <div>
-        <SideMenu />
-      </div> */}
+      {showSideMenu && (
+        <div>
+          <SideMenu />
+        </div>
+      )}
 
       <div className="flex flex-col flex-1 h-screen overflow-hidden">
-        <WorkspaceHeader user={user} />
+        <WorkspaceHeader
+          user={user}
+          toggleSideMenu={() => setShowSideMenu(!showSideMenu)}
+        />
         <Board
           dummyData={dummyData}
           addItem={addItem}
@@ -87,7 +99,23 @@ export default function Workspace({ _session }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  return {
-    props: { _session: session },
-  };
+  const client = await clientPromise;
+  const db = await client.db();
+  const workspaceId = context.query.workspace;
+  const user = await db
+    .collection("users")
+    .findOne({ email: session.user.email });
+
+  if (
+    user.workspaces.filter((workspace) => workspace.id === workspaceId).length >
+    0
+  ) {
+    const { lists } = await db
+      .collection("workspaces")
+      .findOne({ _id: ObjectId(workspaceId) });
+    return {
+      props: { _session: session, lists },
+    };
+  }
+  return { props: { _session: session, lists: [] } };
 }
