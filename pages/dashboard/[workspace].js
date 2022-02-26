@@ -23,7 +23,7 @@ export default function Workspace({ _session, lists }) {
   const router = useRouter();
   const { workspace: workspaceId } = router.query;
 
-  const addItem = (title, value) => {
+  const addItem = async (title, value) => {
     if (value) {
       const listToUpdate = dummyData.filter((list) => list.title === title)[0];
       const otherlists = dummyData.filter((list) => list.title !== title);
@@ -33,11 +33,16 @@ export default function Workspace({ _session, lists }) {
           { ...listToUpdate, items: [...listToUpdate.items, value] },
         ].sort((list1, list2) => list1.id > list2.id)
       );
+
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/newitem`,
+        { item: value, workspaceId, title }
+      );
     }
   };
 
   const addNewList = async ({ title, theme }) => {
-    // setDummyData([...dummyData, { id: count, title, theme, items: [] }]);
+    setDummyData([...dummyData, { id: count, title, theme, items: [] }]);
 
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/newlist`,
