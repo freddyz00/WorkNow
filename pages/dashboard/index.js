@@ -1,7 +1,9 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { getSession } from "next-auth/react";
+import { initializeWorkspaces } from "../../features/workspaces/workspacesSlice";
 
 import { darkColorGenerator } from "../../lib/utils";
 
@@ -22,45 +24,9 @@ export default function Workspace({ _session, isConnected, workspaces }) {
   const [workspaceColor, setWorkSpaceColor] = useState(
     darkColorGenerator.generate()
   );
-  // const [workspaces, setWorkspaces] = useState([
-  //   {
-  //     id: "jksoqueitjklJWijf",
-  //     title: "My Workspace 1",
-  //     theme: randomColorGenerator.generate(),
-  //   },
-  //   // {
-  //   //   id: "rwerdsafdeqr",
-  //   //   title: "My Workspace 2",
-  //   //   theme: randomColorGenerator.generate(),
-  //   // },
-  //   // {
-  //   //   id: "sfdsafewrwer",
-  //   //   title: "My Workspace 3",
-  //   //   theme: randomColorGenerator.generate(),
-  //   // },
-  //   // {
-  //   //   id: "sdfasfas",
-  //   //   title: "My Workspace 4",
-  //   //   theme: randomColorGenerator.generate(),
-  //   // },
-  //   // {
-  //   //   id: "qwerwqersfa",
-  //   //   title: "My Workspace 5",
-  //   //   theme: randomColorGenerator.generate(),
-  //   // },
-  //   // {
-  //   //   id: "sdf",
-  //   //   title: "My Workspace 6",
-  //   //   theme: randomColorGenerator.generate(),
-  //   // },
-  //   // {
-  //   //   id: "asdfadqe",
-  //   //   title: "My Workspace 7",
-  //   //   theme: randomColorGenerator.generate(),
-  //   // },
-  // ]);
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -75,9 +41,10 @@ export default function Workspace({ _session, isConnected, workspaces }) {
         userId: _session.user.id,
         title: workspaceInput,
         theme: workspaceColor,
-      },
+      }
     );
     handleCloseModal();
+
     router.push(`/dashboard/${res.data.id}`);
   };
 
@@ -85,6 +52,10 @@ export default function Workspace({ _session, isConnected, workspaces }) {
     if (!_session) {
       router.push("/login");
     }
+  }, []);
+
+  useEffect(() => {
+    dispatch(initializeWorkspaces(workspaces));
   }, []);
 
   if (!_session) return <Loading />;
@@ -138,9 +109,11 @@ export default function Workspace({ _session, isConnected, workspaces }) {
 
           {/* workspace image */}
           <div className="workspace-color flex justify-center items-center self-center w-28 h-28 rounded-xl">
-            <p className="text-5xl text-white font-bold">
-              {workspaceInput[0].toUpperCase()}
-            </p>
+            {workspaceInput && (
+              <p className="text-5xl text-white font-bold">
+                {workspaceInput[0].toUpperCase()}
+              </p>
+            )}
           </div>
 
           {/* form input */}
@@ -149,6 +122,7 @@ export default function Workspace({ _session, isConnected, workspaces }) {
             <input
               id="workspaceInput"
               type="text"
+              autoComplete="off"
               value={workspaceInput}
               onChange={(e) => setWorkspaceInput(e.target.value)}
               className="py-2 px-3 mt-2 rounded-md border-solid border-2 border-slate-300"

@@ -2,34 +2,61 @@ import cn from "classnames";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedTab } from "../features/selectedTab/selectedTabSlice";
 
-const SideMenuItem = ({ title, selected, onPress }) => {
+import { BsKanban, BsFillChatLeftDotsFill } from "react-icons/bs";
+import { useRouter } from "next/router";
+
+const SideMenuItem = ({ title, selected, icon }) => {
   const dispatch = useDispatch();
   return (
     <div
       onClick={() => dispatch(setSelectedTab(title))}
-      className={cn("ml-3 mb-3 py-3 pl-3 rounded-l-xl cursor-pointer", {
-        "bg-white": selected,
-        "hover:bg-slate-200": !selected,
-      })}
+      className={cn(
+        "flex items-center ml-3 mb-3 py-3 pl-5 rounded-l-full cursor-pointer",
+        {
+          "bg-white": selected,
+          "hover:bg-slate-200": !selected,
+        }
+      )}
     >
-      <p className="text-lg">{title}</p>
+      {icon}
+      <p className="text-lg ml-3">{title}</p>
     </div>
   );
 };
 
 export default function SideMenu() {
   const selectedTab = useSelector((state) => state.selectedTab);
-  return (
-    <div className="h-screen bg-slate-100">
-      <p className="text-xl font-semibold p-5">Workspace</p>
+  const workspaces = useSelector((state) => state.workspaces);
+  const router = useRouter();
+  const { workspace: workspaceId } = router.query;
 
-      <select className="text-xl mb-2 px-5 py-3 cursor-pointer mx-3">
-        <option>My Workspace</option>
-        <option>My Workspace2</option>
-        <option>My Workspace3</option>
+  const handleChange = (e) => {
+    router.push(`/dashboard/${e.target.value}`);
+  };
+
+  return (
+    <div className="h-screen bg-slate-50">
+      <select
+        onChange={handleChange}
+        className="text-2xl font-semibold mx-3 mt-5 p-2 mb-3 cursor-pointer bg-slate-50 hover:bg-slate-200"
+      >
+        {workspaces.map((workspace) => (
+          <option value={workspace.id} selected={workspace.id === workspaceId}>
+            {workspace.title}
+          </option>
+        ))}
       </select>
-      <SideMenuItem title="Board" selected={selectedTab === "Board"} />
-      <SideMenuItem title="Chat" selected={selectedTab === "Chat"} />
+
+      <SideMenuItem
+        title="Board"
+        selected={selectedTab === "Board"}
+        icon={<BsKanban className="text-xl" />}
+      />
+      <SideMenuItem
+        title="Chat"
+        selected={selectedTab === "Chat"}
+        icon={<BsFillChatLeftDotsFill className="text-xl" />}
+      />
     </div>
   );
 }

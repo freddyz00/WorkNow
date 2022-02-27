@@ -15,14 +15,16 @@ import { ObjectId } from "mongodb";
 
 import { useSelector, useDispatch } from "react-redux";
 import { initializeLists } from "../../features/lists/listsSlice";
+import { initializeWorkspaces } from "../../features/workspaces/workspacesSlice";
 
 let count = 4;
 
-export default function Workspace({ _session, lists }) {
+export default function Workspace({ _session, lists, workspaces }) {
   const { user } = _session;
   const [showSideMenu, setShowSideMenu] = useState(false);
   const data = useSelector((state) => state.lists);
   const selectedTab = useSelector((state) => state.selectedTab);
+  const workspacesFromStore = useSelector((state) => state.workspaces);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -30,7 +32,8 @@ export default function Workspace({ _session, lists }) {
 
   useEffect(() => {
     dispatch(initializeLists(lists));
-  }, []);
+    dispatch(initializeWorkspaces(workspaces));
+  }, [lists, workspaces]);
 
   useEffect(() => {
     if (!_session) {
@@ -83,7 +86,7 @@ export async function getServerSideProps(context) {
       .collection("workspaces")
       .findOne({ _id: ObjectId(workspaceId) });
     return {
-      props: { _session: session, lists },
+      props: { _session: session, lists, workspaces: user.workspaces },
     };
   }
   return { props: { _session: session, lists: [] } };
