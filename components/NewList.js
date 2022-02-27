@@ -1,20 +1,36 @@
+import { useRouter } from "next/router";
 import { useState, useRef } from "react";
 import { lightColorGenerator } from "../lib/utils";
 
-export default function NewList({ addNewList }) {
+import { useDispatch } from "react-redux";
+import { addList } from "../features/lists/listsSlice";
+
+import axios from "axios";
+
+export default function NewList() {
   const titleRef = useRef();
-  const [title, setTitle] = useState("")
+  const [title, setTitle] = useState("");
+
+  const router = useRouter();
+  const { workspace: workspaceId } = router.query;
+  const dispatch = useDispatch();
 
   const theme = lightColorGenerator.generate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (title) {
-      addNewList({
+      dispatch(addList({ id: 123, title, theme, items: [] }));
+
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/newlist`, {
+        id: 123,
+        workspaceId,
         title,
         theme,
       });
-      setTitle("")
+
+      setTitle("");
+      titleRef.current.blur();
     }
   };
 

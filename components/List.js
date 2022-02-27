@@ -1,36 +1,47 @@
 import ListItemCard from "./ListItemCard";
-import cn from "classnames";
 import { useState, useRef } from "react";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { addItem, updateListTitle } from "../features/lists/listsSlice";
+import axios from "axios";
 
-export default function List({
-  id,
-  title,
-  listItems,
-  theme,
-  addItem,
-  updateListTitle,
-}) {
+export default function List({ id, title, listItems, theme }) {
+  const router = useRouter();
+  const { workspace: workspaceId } = router.query;
   const newItemInputRef = useRef();
   const titleRef = useRef();
   const [titleInput, setTitleInput] = useState(title);
+  const dispatch = useDispatch();
 
-  const handleSubmitNewItem = (e) => {
+  const handleSubmitNewItem = async (e) => {
     e.preventDefault();
-    addItem(title, newItemInputRef.current.value);
-    newItemInputRef.current.value = "";
-    newItemInputRef.current.blur();
+    if (newItemInputRef.current.value) {
+      const tempItem = newItemInputRef.current.value;
+      dispatch(addItem({ title, item: newItemInputRef.current.value }));
+      newItemInputRef.current.value = "";
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/newitem`, {
+        item: tempItem,
+        workspaceId,
+        title,
+      });
+    }
   };
 
-  const handleSubmitTitle = (e) => {
+  const handleSubmitTitle = async (e) => {
     e.preventDefault();
-    updateListTitle(id, titleInput);
+    dispatch(updateListTitle({ id, newTitle: titleInput }));
+    await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/updatelisttitle`, {
+      workspaceId,
+      newTitle: titleInput,
+      id,
+    });
     titleRef.current.blur();
   };
 
   return (
-    <div className="flex flex-col m-3 rounded-b-md h-fit shadow-md">
+    <div className="flex flex-col m-3 rounded-b-md h-fit max-h-full shadow-md">
       <div id="color" className="h-3" />
-      <div className="flex flex-col w-80 h-fit p-3 bg-slate-100 border border-solid border-slate-200 rounded-b-md transition ease-out duration-300">
+      <div className="flex flex-col w-80 h-fit max-h-full p-3 bg-slate-100 border border-solid border-slate-200 rounded-b-md transition ease-out duration-300">
         <form onSubmit={handleSubmitTitle}>
           <input
             ref={titleRef}
@@ -41,9 +52,11 @@ export default function List({
             onFocus={() => titleRef.current.select()}
           />
         </form>
+
         {listItems?.map((item, index) => (
           <ListItemCard key={index} item={item} />
         ))}
+
         <form onSubmit={handleSubmitNewItem}>
           <input
             ref={newItemInputRef}

@@ -3,26 +3,20 @@ import NewList from "./NewList";
 import Button from "../components/Button";
 import { signOut } from "next-auth/react";
 
-export default function Board({
-  dummyData,
-  addItem,
-  updateListTitle,
-  addNewList,
-}) {
+export default function Board({ data, updateListTitle }) {
   return (
-    <div className="flex flex-1 overflow-x-scroll px-5">
-      {dummyData.map(({ id, title, theme, items }) => (
+    <div className="flex flex-1 max-h-full overflow-x-scroll px-5">
+      {data.map(({ id, title, theme, items }) => (
         <List
           id={id}
           key={id}
           title={title}
           listItems={items}
           theme={theme}
-          addItem={addItem}
           updateListTitle={updateListTitle}
         />
       ))}
-      <NewList addNewList={addNewList} />
+      <NewList />
       <Button
         title="Sign Out"
         onPress={() => signOut({ callbackUrl: "/dashboard" })}

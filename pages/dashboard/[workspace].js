@@ -14,58 +14,21 @@ import { ObjectId } from "mongodb";
 
 import axios from "axios";
 
+import { useSelector, useDispatch } from "react-redux";
+import { initializeLists } from "../../features/lists/listsSlice";
+
 let count = 4;
 
 export default function Workspace({ _session, lists }) {
   const { user } = _session;
-  const [dummyData, setDummyData] = useState(lists);
-  console.log(dummyData)
   const [showSideMenu, setShowSideMenu] = useState(false);
+  const data = useSelector((state) => state.lists);
+  const dispatch = useDispatch();
   const router = useRouter();
-  const { workspace: workspaceId } = router.query;
 
-  const addItem = async (title, value) => {
-    if (value) {
-      const listToUpdate = dummyData.filter((list) => list.title === title)[0];
-      const otherlists = dummyData.filter((list) => list.title !== title);
-      setDummyData(
-        [
-          ...otherlists,
-          { ...listToUpdate, items: [...listToUpdate.items, value] },
-        ].sort((list1, list2) => list1.id > list2.id)
-      );
-
-      // const res = await axios.post(
-      //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/newitem`,
-      //   { item: value, workspaceId, title }
-      // );
-    }
-  };
-
-  const addNewList = async ({ title, theme }) => {
-    setDummyData([...dummyData, { id: 4, title, theme, items: [] }]);
-
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/newlist`,
-      {
-        id: 4,
-        workspaceId,
-        title,
-        theme,
-      }
-    );
-    count++;
-  };
-
-  const updateListTitle = (id, title) => {
-    const listToUpdate = dummyData.filter((list) => list.id === id)[0];
-    const otherlists = dummyData.filter((list) => list.id !== id);
-    setDummyData(
-      [...otherlists, { ...listToUpdate, title: title }].sort(
-        (list1, list2) => list1.id > list2.id
-      )
-    );
-  };
+  useEffect(() => {
+    dispatch(initializeLists(lists));
+  }, []);
 
   useEffect(() => {
     if (!_session) {
@@ -87,17 +50,12 @@ export default function Workspace({ _session, lists }) {
         </div>
       )}
 
-      <div className="flex flex-col flex-1 h-screen overflow-hidden">
+      <div className="flex flex-col flex-1 h-screen max-h-screen overflow-hidden">
         <WorkspaceHeader
           user={user}
           toggleSideMenu={() => setShowSideMenu(!showSideMenu)}
         />
-        <Board
-          dummyData={dummyData}
-          addItem={addItem}
-          updateListTitle={updateListTitle}
-          addNewList={addNewList}
-        />
+        <Board data={data.length > 0 ? data : lists} />
       </div>
     </div>
   );
