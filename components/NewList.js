@@ -1,19 +1,20 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { lightColorGenerator } from "../lib/utils";
 
 export default function NewList({ addNewList }) {
   const titleRef = useRef();
+  const [title, setTitle] = useState("")
 
   const theme = lightColorGenerator.generate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (titleRef.current.value) {
+    if (title) {
       addNewList({
-        title: titleRef.current.value,
+        title,
         theme,
       });
-      titleRef.current.value = "";
+      setTitle("")
     }
   };
 
@@ -27,6 +28,8 @@ export default function NewList({ addNewList }) {
             type="text"
             placeholder="+ Add a new list "
             className="w-full text-lg font-semibold px-2 bg-transparent rounded-md cursor-pointer border-none outline-none transtion ease-out duration-300 hover:bg-slate-200 focus:bg-white focus:placeholder:text-white"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             onFocus={() => titleRef.current.select()}
           />
         </form>

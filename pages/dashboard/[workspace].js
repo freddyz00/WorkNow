@@ -19,6 +19,7 @@ let count = 4;
 export default function Workspace({ _session, lists }) {
   const { user } = _session;
   const [dummyData, setDummyData] = useState(lists);
+  console.log(dummyData)
   const [showSideMenu, setShowSideMenu] = useState(false);
   const router = useRouter();
   const { workspace: workspaceId } = router.query;
@@ -34,20 +35,20 @@ export default function Workspace({ _session, lists }) {
         ].sort((list1, list2) => list1.id > list2.id)
       );
 
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/newitem`,
-        { item: value, workspaceId, title }
-      );
+      // const res = await axios.post(
+      //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/newitem`,
+      //   { item: value, workspaceId, title }
+      // );
     }
   };
 
   const addNewList = async ({ title, theme }) => {
-    setDummyData([...dummyData, { id: count, title, theme, items: [] }]);
+    setDummyData([...dummyData, { id: 4, title, theme, items: [] }]);
 
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/newlist`,
       {
-        id: count,
+        id: 4,
         workspaceId,
         title,
         theme,

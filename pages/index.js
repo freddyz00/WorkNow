@@ -43,7 +43,7 @@ export default function Home({ _session }) {
 
       {/*  */}
       <section className="flex h-screen py-12 bg-gradient-to-t from-blue-100 to-white justify-center mb-28">
-        <div className="container columns-1 md:columns-2">
+        <div className="container h-full columns-1 md:columns-2">
           {/* left */}
           <div className="flex flex-col justify-center items-start h-full w-full pl-24 pr-12">
             <h1 className="text-3xl md:text-5xl font-semibold leading-snug my-4">
@@ -61,9 +61,9 @@ export default function Home({ _session }) {
           </div>
 
           {/* right */}
-          <div className="flex justify-center items-center h-full w-full">
+          <div className="flex h-full justify-center items-center">
             <Image
-              className="max-w-full"
+              className="h-full max-w-full"
               src="/images/home-page-img.png"
               width="1000"
               height="750"

@@ -35,7 +35,7 @@ export default function List({
           <input
             ref={titleRef}
             type="text"
-            className="w-full text-lg font-semibold mb-3 px-2 bg-transparent rounded-md cursor-pointer border-none outline-none transtion ease-out duration-300 hover:bg-slate-200 focus:bg-white focus:placeholder:text-white"
+            className="w-full text-lg font-semibold mb-3 px-2 bg-transparent rounded-md cursor-pointer border-none outline-none transtion ease-out duration-300 hover:bg-slate-200 focus:bg-white"
             value={titleInput}
             onChange={(e) => setTitleInput(e.target.value)}
             onFocus={() => titleRef.current.select()}

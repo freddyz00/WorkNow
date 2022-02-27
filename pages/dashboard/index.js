@@ -28,11 +28,11 @@ export default function Workspace({ _session, isConnected, workspaces }) {
   //     title: "My Workspace 1",
   //     theme: randomColorGenerator.generate(),
   //   },
-  //   {
-  //     id: "rwerdsafdeqr",
-  //     title: "My Workspace 2",
-  //     theme: randomColorGenerator.generate(),
-  //   },
+  //   // {
+  //   //   id: "rwerdsafdeqr",
+  //   //   title: "My Workspace 2",
+  //   //   theme: randomColorGenerator.generate(),
+  //   // },
   //   // {
   //   //   id: "sfdsafewrwer",
   //   //   title: "My Workspace 3",
@@ -76,7 +76,6 @@ export default function Workspace({ _session, isConnected, workspaces }) {
         title: workspaceInput,
         theme: workspaceColor,
       },
-      { headers: { "Content-Type": "application/json" } }
     );
     handleCloseModal();
     router.push(`/dashboard/${res.data.id}`);
