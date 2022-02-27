@@ -7,8 +7,7 @@ export default async function handler(req, res) {
     const client = await clientPromise;
     const db = client.db();
 
-    console.log(req.body);
-    // add list to appropriate workspace
+    // find appropriate list and update the title
     await db.collection("workspaces").updateOne(
       {
         _id: ObjectId(workspaceId),

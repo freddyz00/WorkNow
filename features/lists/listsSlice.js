@@ -1,5 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
-import { list } from "postcss";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const listsSlice = createSlice({
   name: "lists",

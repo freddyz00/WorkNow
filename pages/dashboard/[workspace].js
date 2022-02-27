@@ -6,13 +6,12 @@ import { getSession } from "next-auth/react";
 
 import Loading from "../../components/Loading";
 import WorkspaceHeader from "../../components/WorkspaceHeader";
-import Board from "../../components/Board";
 import SideMenu from "../../components/SideMenu";
+import Board from "../../components/Board";
+import Chat from "../../components/Chat";
 
 import clientPromise from "../../lib/mongodb";
 import { ObjectId } from "mongodb";
-
-import axios from "axios";
 
 import { useSelector, useDispatch } from "react-redux";
 import { initializeLists } from "../../features/lists/listsSlice";
@@ -23,8 +22,11 @@ export default function Workspace({ _session, lists }) {
   const { user } = _session;
   const [showSideMenu, setShowSideMenu] = useState(false);
   const data = useSelector((state) => state.lists);
+  const selectedTab = useSelector((state) => state.selectedTab);
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const closeSideMenu = () => setShowSideMenu(false);
 
   useEffect(() => {
     dispatch(initializeLists(lists));
@@ -46,7 +48,7 @@ export default function Workspace({ _session, lists }) {
 
       {showSideMenu && (
         <div>
-          <SideMenu />
+          <SideMenu closeSideMenu={closeSideMenu} />
         </div>
       )}
 
@@ -55,7 +57,10 @@ export default function Workspace({ _session, lists }) {
           user={user}
           toggleSideMenu={() => setShowSideMenu(!showSideMenu)}
         />
-        <Board data={data.length > 0 ? data : lists} />
+        {selectedTab === "Board" && (
+          <Board data={data.length > 0 ? data : lists} />
+        )}
+        {selectedTab === "Chat" && <Chat />}
       </div>
     </div>
   );
