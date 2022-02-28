@@ -48,6 +48,10 @@ export default function Workspace({
     }
   }, []);
 
+  useEffect(() => {
+    console.log(listsStore);
+  });
+
   if (!_session) return <Loading />;
 
   return (

@@ -22,10 +22,30 @@ export const listsSlice = createSlice({
         }
         return list;
       }),
+    updateItem: (state, action) =>
+      state.map((list) => {
+        if (list.title === action.payload.listTitle) {
+          return {
+            ...list,
+            items: list.items.map((item) => {
+              if (item === action.payload.oldItem) {
+                return action.payload.newItem;
+              }
+              return item;
+            }),
+          };
+        }
+        return list;
+      }),
   },
 });
 
-export const { addList, initializeLists, addItem, updateListTitle } =
-  listsSlice.actions;
+export const {
+  addList,
+  initializeLists,
+  addItem,
+  updateListTitle,
+  updateItem,
+} = listsSlice.actions;
 
 export default listsSlice.reducer;

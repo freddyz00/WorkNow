@@ -30,16 +30,16 @@ export default function List({ id, title, listItems, theme }) {
   const handleSubmitTitle = async (e) => {
     e.preventDefault();
     dispatch(updateListTitle({ id, newTitle: titleInput }));
+    titleRef.current.blur();
     await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/updatelisttitle`, {
       workspaceId,
       newTitle: titleInput,
       id,
     });
-    titleRef.current.blur();
   };
 
   return (
-    <div className="flex flex-col m-3 rounded-b-md h-fit max-h-full shadow-md">
+    <section className="flex flex-col m-3 rounded-b-md h-fit max-h-full shadow-md">
       <div id="color" className="h-3" />
       <div className="flex flex-col w-80 h-fit max-h-full p-3 bg-slate-100 border border-solid border-slate-200 rounded-b-md transition ease-out duration-300">
         <form onSubmit={handleSubmitTitle}>
@@ -54,7 +54,7 @@ export default function List({ id, title, listItems, theme }) {
         </form>
 
         {listItems?.map((item, index) => (
-          <ListItemCard key={index} item={item} />
+          <ListItemCard key={index} item={item} listTitle={title} />
         ))}
 
         <form onSubmit={handleSubmitNewItem}>
@@ -74,6 +74,6 @@ export default function List({ id, title, listItems, theme }) {
           background-color: ${theme};
         }
       `}</style>
-    </div>
+    </section>
   );
 }

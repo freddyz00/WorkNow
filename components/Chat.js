@@ -49,7 +49,7 @@ export default function Chat({ data }) {
 
   const lastRef = useCallback((node) => {
     if (node) {
-      node.scrollIntoView({ smooth: true });
+      node.scrollIntoView();
     }
   }, []);
 
