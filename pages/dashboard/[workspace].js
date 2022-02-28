@@ -55,7 +55,7 @@ export default function Workspace({ _session, lists, workspaces }) {
         </div>
       )}
 
-      <div className="flex flex-col flex-1 h-screen max-h-screen overflow-hidden">
+      <div className="flex flex-col flex-1 h-screen max-h-screen overflow-hidden relative">
         <WorkspaceHeader
           user={user}
           toggleSideMenu={() => setShowSideMenu(!showSideMenu)}

@@ -35,10 +35,10 @@ export default function SideMenu() {
   };
 
   return (
-    <div className="h-screen bg-slate-50">
+    <div className="h-screen bg-slate-100">
       <select
         onChange={handleChange}
-        className="text-2xl font-semibold mx-3 mt-5 p-2 mb-3 cursor-pointer bg-slate-50 hover:bg-slate-200"
+        className="text-2xl font-semibold mx-3 mt-5 p-2 mb-3 cursor-pointer bg-slate-100 hover:bg-slate-200"
       >
         {workspaces.map((workspace) => (
           <option value={workspace.id} selected={workspace.id === workspaceId}>
