@@ -23,12 +23,11 @@ const Message = ({ text, sender, reference }) => {
   );
 };
 
-export default function Chat() {
+export default function Chat({ data }) {
   const session = useSession();
   const user = session.data.user;
   const router = useRouter();
   const { workspace: workspaceId } = router.query;
-  const messages = useSelector((state) => state.messages);
   const dispatch = useDispatch();
   const [inputText, setInputText] = useState("");
 
@@ -38,17 +37,13 @@ export default function Chat() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   lastRef.current?.scrollIntoView();
-  // }, [messages]);
-
   const sendMessage = async (e) => {
     e.preventDefault();
     if (inputText) {
       // dispatch action to update store
       dispatch(addMessage({ sender: user, text: inputText }));
-      // add to database
 
+      // add to database
       await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/newmessage`, {
         workspaceId,
         text: inputText,
@@ -64,8 +59,8 @@ export default function Chat() {
     <div className="flex-1 overflow-y-auto">
       {/* chat body */}
       <section className="px-20 pb-10 pt-5 mb-3">
-        {messages.map(({ text, sender }, index) => {
-          const lastMessage = messages.length - 1 === index;
+        {data.map(({ text, sender }, index) => {
+          const lastMessage = data.length - 1 === index;
           return (
             <div ref={lastMessage ? lastRef : null}>
               <Message key={index} text={text} sender={sender} />

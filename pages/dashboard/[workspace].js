@@ -16,24 +16,31 @@ import { ObjectId } from "mongodb";
 import { useSelector, useDispatch } from "react-redux";
 import { initializeLists } from "../../features/lists/listsSlice";
 import { initializeWorkspaces } from "../../features/workspaces/workspacesSlice";
+import { initializeMessages } from "../../features/messages/messagesSlice";
 
 let count = 4;
 
-export default function Workspace({ _session, lists, workspaces }) {
+export default function Workspace({
+  _session,
+  listsProps,
+  messagesProps,
+  workspaces,
+}) {
   const { user } = _session;
   const [showSideMenu, setShowSideMenu] = useState(false);
-  const data = useSelector((state) => state.lists);
+  const listsStore = useSelector((state) => state.lists);
+  const messagesStore = useSelector((state) => state.messages);
   const selectedTab = useSelector((state) => state.selectedTab);
-  const workspacesFromStore = useSelector((state) => state.workspaces);
   const dispatch = useDispatch();
   const router = useRouter();
 
   const closeSideMenu = () => setShowSideMenu(false);
 
   useEffect(() => {
-    dispatch(initializeLists(lists));
+    dispatch(initializeLists(listsProps));
+    dispatch(initializeMessages(messagesProps));
     dispatch(initializeWorkspaces(workspaces));
-  }, [lists, workspaces]);
+  }, [listsProps, workspaces, messagesProps]);
 
   useEffect(() => {
     if (!_session) {
@@ -61,9 +68,13 @@ export default function Workspace({ _session, lists, workspaces }) {
           toggleSideMenu={() => setShowSideMenu(!showSideMenu)}
         />
         {selectedTab === "Board" && (
-          <Board data={data.length > 0 ? data : lists} />
+          <Board data={listsStore.length > 0 ? listsStore : listsProps} />
         )}
-        {selectedTab === "Chat" && <Chat />}
+        {selectedTab === "Chat" && (
+          <Chat
+            data={messagesStore.length > 0 ? messagesStore : messagesProps}
+          />
+        )}
       </div>
     </div>
   );
@@ -82,12 +93,17 @@ export async function getServerSideProps(context) {
     user.workspaces.filter((workspace) => workspace.id === workspaceId).length >
     0
   ) {
-    const { lists } = await db
+    const { lists, messages } = await db
       .collection("workspaces")
       .findOne({ _id: ObjectId(workspaceId) });
     return {
-      props: { _session: session, lists, workspaces: user.workspaces },
+      props: {
+        _session: session,
+        listsProps: lists,
+        messagesProps: messages,
+        workspaces: user.workspaces,
+      },
     };
   }
-  return { props: { _session: session, lists: [] } };
+  return { props: { _session: session, listsProps: [], messagesProps: [] } };
 }
