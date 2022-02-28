@@ -1,8 +1,10 @@
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { addMessage } from "../features/messages/messagesSlice";
+import axios from "axios";
 
 const Message = ({ text, sender, reference }) => {
   return (
@@ -24,11 +26,11 @@ const Message = ({ text, sender, reference }) => {
 export default function Chat() {
   const session = useSession();
   const user = session.data.user;
+  const router = useRouter();
+  const { workspace: workspaceId } = router.query;
   const messages = useSelector((state) => state.messages);
   const dispatch = useDispatch();
   const [inputText, setInputText] = useState("");
-
-  // const lastRef = useRef();
 
   const lastRef = useCallback((node) => {
     if (node) {
@@ -40,12 +42,18 @@ export default function Chat() {
   //   lastRef.current?.scrollIntoView();
   // }, [messages]);
 
-  const sendMessage = (e) => {
+  const sendMessage = async (e) => {
     e.preventDefault();
     if (inputText) {
       // dispatch action to update store
       dispatch(addMessage({ sender: user, text: inputText }));
       // add to database
+
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/newmessage`, {
+        workspaceId,
+        text: inputText,
+        sender: user,
+      });
 
       lastRef.current?.scrollIntoView({ behavior: "smooth" });
       setInputText("");
@@ -55,7 +63,7 @@ export default function Chat() {
   return (
     <div className="flex-1 overflow-y-auto">
       {/* chat body */}
-      <section className="px-20 py-10 mb-3">
+      <section className="px-20 pb-10 pt-5 mb-3">
         {messages.map(({ text, sender }, index) => {
           const lastMessage = messages.length - 1 === index;
           return (
