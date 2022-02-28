@@ -99,8 +99,8 @@ export async function getServerSideProps(context) {
     return {
       props: {
         _session: session,
-        listsProps: lists,
-        messagesProps: messages,
+        listsProps: lists || [],
+        messagesProps: messages || [],
         workspaces: user.workspaces,
       },
     };
