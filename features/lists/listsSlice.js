@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 export const listsSlice = createSlice({
   name: "lists",
@@ -37,6 +37,16 @@ export const listsSlice = createSlice({
         }
         return list;
       }),
+    deleteItem: (state, action) =>
+      state.map((list) => {
+        if (list.title === action.payload.listTitle) {
+          return {
+            ...list,
+            items: list.items.filter((item) => item !== action.payload.item),
+          };
+        }
+        return list;
+      }),
   },
 });
 
@@ -46,6 +56,7 @@ export const {
   addItem,
   updateListTitle,
   updateItem,
+  deleteItem,
 } = listsSlice.actions;
 
 export default listsSlice.reducer;

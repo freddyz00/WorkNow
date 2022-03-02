@@ -48,14 +48,14 @@ export default function SideMenu() {
       </select>
 
       <SideMenuItem
-        title="Members"
-        selected={selectedTab === "Members"}
-        icon={<BsFillChatLeftDotsFill className="text-xl" />}
-      />
-      <SideMenuItem
         title="Board"
         selected={selectedTab === "Board"}
         icon={<BsKanban className="text-xl" />}
+      />
+      <SideMenuItem
+        title="Members"
+        selected={selectedTab === "Members"}
+        icon={<BsFillChatLeftDotsFill className="text-xl" />}
       />
       <SideMenuItem
         title="Chat"

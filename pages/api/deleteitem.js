@@ -2,18 +2,20 @@ import clientPromise from "../../lib/mongodb";
 import { ObjectId } from "mongodb";
 
 export default async function handler(req, res) {
-  if (req.method === "PUT") {
-    const { workspaceId, newItem, oldItem, listTitle } = req.body;
+  if (req.method === "DELETE") {
+    const { item, workspaceId, listTitle } = req.body;
     const client = await clientPromise;
     const db = client.db();
 
-    // find appropriate list and update the title
+    console.log(req.body);
+
+    // add item to appropriate list
     await db.collection("workspaces").updateOne(
       {
         _id: ObjectId(workspaceId),
       },
-      { $set: { "lists.$[elem].items.$[item]": newItem } },
-      { arrayFilters: [{ "elem.title": listTitle }, { item: oldItem }] }
+      { $pull: { "lists.$[elem].items": item } },
+      { arrayFilters: [{ "elem.title": listTitle }] }
     );
 
     res.status(200).json({});
