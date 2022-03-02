@@ -19,7 +19,7 @@ export default function Button({ title, large, type, icon, onPress }) {
             type === "primary",
         },
         {
-          "bg-white hover:bg-slate-100 border border-slate-500 border-solid":
+          "bg-white hover:bg-slate-100 border border-slate-300 border-solid":
             type === "secondary",
         }
       )}

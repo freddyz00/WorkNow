@@ -17,12 +17,12 @@ export default function List({ id, title, listItems, theme }) {
     e.preventDefault();
     if (newItemInputRef.current.value) {
       const tempItem = newItemInputRef.current.value;
-      dispatch(addItem({ title, item: newItemInputRef.current.value }));
+      dispatch(addItem({ id, item: newItemInputRef.current.value }));
       newItemInputRef.current.value = "";
       await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/newitem`, {
         item: tempItem,
         workspaceId,
-        title,
+        id,
       });
     }
   };
@@ -54,7 +54,7 @@ export default function List({ id, title, listItems, theme }) {
         </form>
 
         {listItems?.map((item, index) => (
-          <ListItemCard key={index} item={item} listTitle={title} />
+          <ListItemCard key={index} item={item} listId={id} />
         ))}
 
         <form onSubmit={handleSubmitNewItem}>

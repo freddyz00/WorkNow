@@ -18,7 +18,7 @@ import ReactModal from "react-modal";
 import axios from "axios";
 import clientPromise from "../../lib/mongodb";
 
-export default function Workspace({ _session, isConnected, workspaces }) {
+export default function Dashboard({ _session, workspaces }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [workspaceInput, setWorkspaceInput] = useState("New Workspace");
   const [workspaceColor, setWorkSpaceColor] = useState(
@@ -35,17 +35,19 @@ export default function Workspace({ _session, isConnected, workspaces }) {
   };
 
   const createNewWorkspace = async () => {
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/newworkspace`,
-      {
-        userId: _session.user.id,
-        title: workspaceInput,
-        theme: workspaceColor,
-      }
-    );
-    handleCloseModal();
+    if (workspaceInput) {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/newworkspace`,
+        {
+          user: _session.user,
+          title: workspaceInput,
+          theme: workspaceColor,
+        }
+      );
+      handleCloseModal();
 
-    router.push(`/dashboard/${res.data.id}`);
+      router.push(`/dashboard/${res.data.id}`);
+    }
   };
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export default function Workspace({ _session, isConnected, workspaces }) {
 
   useEffect(() => {
     dispatch(initializeWorkspaces(workspaces));
-  }, []);
+  }, [workspaces]);
 
   if (!_session) return <Loading />;
 
@@ -166,12 +168,11 @@ export async function getServerSideProps(context) {
           ...session,
           user: { ...session.user, id: user._id.toString() },
         },
-        isConnected: true,
         workspaces,
       },
     };
   } catch (error) {
     console.log(error);
-    return { props: { _session: session, isConnected: false } };
+    return { props: { _session: session } };
   }
 }

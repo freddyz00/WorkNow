@@ -17,14 +17,14 @@ export const listsSlice = createSlice({
       }),
     addItem: (state, action) =>
       state.map((list) => {
-        if (list.title === action.payload.title) {
+        if (list.id === action.payload.id) {
           return { ...list, items: [...list.items, action.payload.item] };
         }
         return list;
       }),
     updateItem: (state, action) =>
       state.map((list) => {
-        if (list.title === action.payload.listTitle) {
+        if (list.id === action.payload.listId) {
           return {
             ...list,
             items: list.items.map((item) => {
@@ -39,7 +39,7 @@ export const listsSlice = createSlice({
       }),
     deleteItem: (state, action) =>
       state.map((list) => {
-        if (list.title === action.payload.listTitle) {
+        if (list.id === action.payload.listId) {
           return {
             ...list,
             items: list.items.filter((item) => item !== action.payload.item),

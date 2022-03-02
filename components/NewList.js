@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addList } from "../features/lists/listsSlice";
 
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 export default function NewList() {
   const titleRef = useRef();
@@ -18,12 +19,13 @@ export default function NewList() {
   const theme = lightColorGenerator.generate();
 
   const handleSubmit = async (e) => {
+    const id = uuidv4();
     e.preventDefault();
     if (title) {
-      dispatch(addList({ id: 123, title, theme, items: [] }));
+      dispatch(addList({ id, title, theme, items: [] }));
 
       await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/newlist`, {
-        id: 123,
+        id,
         workspaceId,
         title,
         theme,
