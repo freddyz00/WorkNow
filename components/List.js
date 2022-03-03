@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { addItem, updateListTitle } from "../features/lists/listsSlice";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 export default function List({ id, title, listItems, theme }) {
   const router = useRouter();
@@ -16,13 +17,22 @@ export default function List({ id, title, listItems, theme }) {
   const handleSubmitNewItem = async (e) => {
     e.preventDefault();
     if (newItemInputRef.current.value) {
-      const tempItem = newItemInputRef.current.value;
-      dispatch(addItem({ id, item: newItemInputRef.current.value }));
+      const tempContent = newItemInputRef.current.value;
+      const itemId = `item-${uuidv4()}`;
+      dispatch(
+        addItem({
+          listId: id,
+          item: {
+            id: itemId,
+            content: newItemInputRef.current.value,
+          },
+        })
+      );
       newItemInputRef.current.value = "";
       await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/newitem`, {
-        item: tempItem,
+        item: { id: itemId, content: tempContent },
         workspaceId,
-        id,
+        listId: id,
       });
     }
   };

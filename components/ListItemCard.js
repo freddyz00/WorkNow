@@ -7,7 +7,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { deleteItem } from "../features/lists/listsSlice";
 
 export default function Card({ item, listId }) {
-  const [inputText, setInputText] = useState(item);
+  const { id, content } = item;
+  const [inputText, setInputText] = useState(content);
   const inputRef = useRef();
 
   const router = useRouter();
@@ -16,13 +17,19 @@ export default function Card({ item, listId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(updateItem({ listId, newItem: inputText, oldItem: item }));
+    dispatch(
+      updateItem({
+        listId,
+        newItem: { ...item, content: inputText },
+        oldItem: item,
+      })
+    );
     inputRef.current.blur();
 
     await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/updateitem`, {
       listId,
       workspaceId,
-      newItem: inputText,
+      newItem: { ...item, content: inputText },
       oldItem: item,
     });
   };

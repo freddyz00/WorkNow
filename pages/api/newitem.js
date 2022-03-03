@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { item, workspaceId, id } = req.body;
+    const { item, workspaceId, listId } = req.body;
     const client = await clientPromise;
     const db = client.db();
 
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         _id: ObjectId(workspaceId),
       },
       { $push: { "lists.$[elem].items": item } },
-      { arrayFilters: [{ "elem.id": id }] }
+      { arrayFilters: [{ "elem.id": listId }] }
     );
 
     res.status(200).json({});

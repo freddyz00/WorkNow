@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         _id: ObjectId(workspaceId),
       },
       { $set: { "lists.$[elem].items.$[item]": newItem } },
-      { arrayFilters: [{ "elem.id": listId }, { item: oldItem }] }
+      { arrayFilters: [{ "elem.id": listId }, { "item.id": oldItem.id }] }
     );
 
     res.status(200).json({});

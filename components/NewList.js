@@ -19,7 +19,7 @@ export default function NewList() {
   const theme = lightColorGenerator.generate();
 
   const handleSubmit = async (e) => {
-    const id = uuidv4();
+    const id = `list-${uuidv4()}`;
     e.preventDefault();
     if (title) {
       dispatch(addList({ id, title, theme, items: [] }));

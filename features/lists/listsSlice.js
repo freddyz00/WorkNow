@@ -17,7 +17,7 @@ export const listsSlice = createSlice({
       }),
     addItem: (state, action) =>
       state.map((list) => {
-        if (list.id === action.payload.id) {
+        if (list.id === action.payload.listId) {
           return { ...list, items: [...list.items, action.payload.item] };
         }
         return list;
@@ -28,7 +28,7 @@ export const listsSlice = createSlice({
           return {
             ...list,
             items: list.items.map((item) => {
-              if (item === action.payload.oldItem) {
+              if (item.id === action.payload.oldItem.id) {
                 return action.payload.newItem;
               }
               return item;
@@ -42,7 +42,9 @@ export const listsSlice = createSlice({
         if (list.id === action.payload.listId) {
           return {
             ...list,
-            items: list.items.filter((item) => item !== action.payload.item),
+            items: list.items.filter(
+              (item) => item.id !== action.payload.item.id
+            ),
           };
         }
         return list;

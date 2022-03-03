@@ -13,9 +13,24 @@ export default async function handler(req, res) {
       title,
       theme,
       lists: [
-        { id: uuidv4(), title: "To-Do", theme: "rgb(147 197 253)", items: [] },
-        { id: uuidv4(), title: "Doing", theme: "rgb(249 168 212)", items: [] },
-        { id: uuidv4(), title: "Done", theme: "rgb(134 239 172)", items: [] },
+        {
+          id: `list-${uuidv4()}`,
+          title: "To-Do",
+          theme: "rgb(147 197 253)",
+          items: [],
+        },
+        {
+          id: `list-${uuidv4()}`,
+          title: "Doing",
+          theme: "rgb(249 168 212)",
+          items: [],
+        },
+        {
+          id: `list-${uuidv4()}`,
+          title: "Done",
+          theme: "rgb(134 239 172)",
+          items: [],
+        },
       ],
       messages: [],
       createdAt: new Date(),
