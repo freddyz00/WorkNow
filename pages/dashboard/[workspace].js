@@ -8,6 +8,7 @@ import Loading from "../../components/Loading";
 import WorkspaceHeader from "../../components/WorkspaceHeader";
 import SideMenu from "../../components/SideMenu";
 import Board from "../../components/Board";
+import Members from "../../components/Members";
 import Chat from "../../components/Chat";
 
 import clientPromise from "../../lib/mongodb";
@@ -70,6 +71,7 @@ export default function Workspace({
         {selectedTab === "Board" && (
           <Board data={listsStore.length > 0 ? listsStore : listsProps} />
         )}
+        {selectedTab === "Members" && <Members />}
         {selectedTab === "Chat" && (
           <Chat
             data={messagesStore.length > 0 ? messagesStore : messagesProps}
