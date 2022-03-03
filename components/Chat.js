@@ -60,7 +60,7 @@ export default function Chat({ data }) {
       dispatch(addMessage({ sender: user, text: inputText }));
 
       // add to database
-      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/newmessage`, {
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/message`, {
         workspaceId,
         text: inputText,
         sender: user,

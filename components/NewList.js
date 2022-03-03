@@ -24,7 +24,7 @@ export default function NewList() {
     if (title) {
       dispatch(addList({ id, title, theme, items: [] }));
 
-      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/newlist`, {
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/list`, {
         id,
         workspaceId,
         title,

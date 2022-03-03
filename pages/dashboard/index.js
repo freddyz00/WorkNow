@@ -37,7 +37,7 @@ export default function Dashboard({ _session, workspaces }) {
   const createNewWorkspace = async () => {
     if (workspaceInput) {
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/newworkspace`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/workspace`,
         {
           user: _session.user,
           title: workspaceInput,

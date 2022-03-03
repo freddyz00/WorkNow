@@ -26,7 +26,7 @@ export default function Card({ item, listId }) {
     );
     inputRef.current.blur();
 
-    await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/updateitem`, {
+    await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/item`, {
       listId,
       workspaceId,
       newItem: { ...item, content: inputText },
@@ -37,7 +37,7 @@ export default function Card({ item, listId }) {
   const handleDelete = async () => {
     dispatch(deleteItem({ listId, item }));
 
-    await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteitem`, {
+    await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/item`, {
       data: {
         listId,
         workspaceId,

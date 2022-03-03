@@ -29,7 +29,7 @@ export default function List({ id, title, listItems, theme }) {
         })
       );
       newItemInputRef.current.value = "";
-      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/newitem`, {
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/item`, {
         item: { id: itemId, content: tempContent },
         workspaceId,
         listId: id,
@@ -41,7 +41,7 @@ export default function List({ id, title, listItems, theme }) {
     e.preventDefault();
     dispatch(updateListTitle({ id, newTitle: titleInput }));
     titleRef.current.blur();
-    await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/updatelisttitle`, {
+    await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/list`, {
       workspaceId,
       newTitle: titleInput,
       id,
