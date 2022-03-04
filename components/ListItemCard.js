@@ -1,15 +1,18 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { updateItem } from "../features/lists/listsSlice";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { BiEdit } from "react-icons/bi";
 import { deleteItem } from "../features/lists/listsSlice";
 import { Draggable } from "react-beautiful-dnd";
 import axios from "axios";
+import cn from "classnames";
 
 export default function Card({ item, listId, index }) {
   const { id, content } = item;
   const [inputText, setInputText] = useState(content);
+  const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef();
 
   const router = useRouter();
@@ -35,6 +38,16 @@ export default function Card({ item, listId, index }) {
     });
   };
 
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  useEffect(() => {
+    if (isEditing) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
+
   const handleDelete = async () => {
     dispatch(deleteItem({ listId, item }));
 
@@ -57,21 +70,42 @@ export default function Card({ item, listId, index }) {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          {/* <form onSubmit={handleSubmit}>
+          <form
+            onSubmit={handleSubmit}
+            className={cn("w-full h-full z-10", {
+              inline: isEditing,
+              hidden: !isEditing,
+            })}
+          >
             <input
-              className="bg-white p-2 w-full rounded-md cursor-pointer focus:bg-white hover:bg-slate-200 transition ease-out duration-300"
+              className="bg-white p-2 w-full rounded-md cursor-pointer break-all break-words focus:bg-white hover:bg-slate-200 transition ease-out duration-300"
               type="text"
               value={inputText}
               ref={inputRef}
+              autoFocus
               onChange={(e) => setInputText(e.target.value)}
               onFocus={() => inputRef.current.select()}
+              onBlur={() => setIsEditing(false)}
             />
-          </form> */}
-          <p className="bg-white p-2 w-full rounded-md">{content}</p>
+          </form>
+
+          <p
+            className={cn("bg-white p-2 w-full rounded-md break-all", {
+              hidden: isEditing,
+            })}
+          >
+            {content}
+          </p>
 
           <div
+            onClick={handleEdit}
+            className="absolute opacity-0 right-10 rounded-md p-1 text-white bg-blue-500 border border-solid hover:border-blue-500 active:bg-blue-600 group-hover:opacity-100 text-xl cursor-pointer"
+          >
+            <BiEdit />
+          </div>
+          <div
             onClick={handleDelete}
-            className="absolute opacity-0 right-2 rounded-md p-1 text-red-500 border border-solid hover:border-red-500 active:bg-red-100 group-hover:opacity-100 text-xl cursor-pointer"
+            className="absolute opacity-0 right-2 rounded-md p-1 text-white bg-red-500 border border-solid hover:border-red-500 active:bg-red-600 group-hover:opacity-100 text-xl cursor-pointer"
           >
             <RiDeleteBin6Line />
           </div>
