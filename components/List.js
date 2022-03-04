@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { addItem, updateListTitle } from "../features/lists/listsSlice";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import { Droppable } from "react-beautiful-dnd";
 
 export default function List({ id, title, listItems, theme }) {
   const router = useRouter();
@@ -62,10 +63,25 @@ export default function List({ id, title, listItems, theme }) {
             onFocus={() => titleRef.current.select()}
           />
         </form>
-
-        {listItems?.map((item, index) => (
-          <ListItemCard key={index} item={item} listId={id} />
-        ))}
+        <Droppable droppableId={id}>
+          {(provided) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              className="min-h-[1px]"
+            >
+              {listItems?.map((item, index) => (
+                <ListItemCard
+                  key={item.id}
+                  item={item}
+                  listId={id}
+                  index={index}
+                />
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
 
         <form onSubmit={handleSubmitNewItem}>
           <input

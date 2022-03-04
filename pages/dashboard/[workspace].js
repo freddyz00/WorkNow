@@ -1,8 +1,9 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 
 import { getSession } from "next-auth/react";
+import { resetServerContext } from "react-beautiful-dnd";
 
 import Loading from "../../components/Loading";
 import WorkspaceHeader from "../../components/WorkspaceHeader";
@@ -37,7 +38,7 @@ export default function Workspace({
 
   const closeSideMenu = () => setShowSideMenu(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(initializeLists(listsProps));
     dispatch(initializeMessages(messagesProps));
     dispatch(initializeWorkspaces(workspaces));
@@ -68,9 +69,7 @@ export default function Workspace({
           user={user}
           toggleSideMenu={() => setShowSideMenu(!showSideMenu)}
         />
-        {selectedTab === "Board" && (
-          <Board data={listsStore.length > 0 ? listsStore : listsProps} />
-        )}
+        {selectedTab === "Board" && <Board data={listsStore} />}
         {selectedTab === "Members" && <Members />}
         {selectedTab === "Chat" && (
           <Chat

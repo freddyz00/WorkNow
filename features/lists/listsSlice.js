@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const listsSlice = createSlice({
   name: "lists",
@@ -15,6 +15,27 @@ export const listsSlice = createSlice({
         }
         return list;
       }),
+    updateListOrder: (state, action) => {
+      const {
+        draggableItem,
+        sourceId,
+        destinationId,
+        sourceIndex,
+        destinationIndex,
+      } = action.payload;
+
+      return state.map((list) => {
+        if (list.id !== sourceId && list.id !== destinationId) return list;
+        const newItems = Array.from(list.items);
+        if (list.id === sourceId) {
+          newItems.splice(sourceIndex, 1);
+        }
+        if (list.id === destinationId) {
+          newItems.splice(destinationIndex, 0, draggableItem);
+        }
+        return { ...list, items: newItems };
+      });
+    },
     addItem: (state, action) =>
       state.map((list) => {
         if (list.id === action.payload.listId) {
@@ -55,8 +76,9 @@ export const listsSlice = createSlice({
 export const {
   addList,
   initializeLists,
-  addItem,
   updateListTitle,
+  updateListOrder,
+  addItem,
   updateItem,
   deleteItem,
 } = listsSlice.actions;
