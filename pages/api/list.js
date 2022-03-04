@@ -12,7 +12,18 @@ export default async function handler(req, res) {
       {
         _id: ObjectId(workspaceId),
       },
-      { $push: { lists: { id, title, theme, items: [] } } }
+
+      {
+        $set: {
+          [`lists.${id}`]: {
+            id,
+            title,
+            theme,
+            items: { itemsOrderIds: [] },
+          },
+        },
+        $push: { "lists.listsOrderIds": id },
+      }
     );
 
     res.status(200).json({});
@@ -26,8 +37,7 @@ export default async function handler(req, res) {
       {
         _id: ObjectId(workspaceId),
       },
-      { $set: { "lists.$[elem].title": newTitle } },
-      { arrayFilters: [{ "elem.id": id }] }
+      { $set: { [`lists.${id}.title`]: newTitle } }
     );
     res.status(200).json({});
   } else {

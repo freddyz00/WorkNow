@@ -76,14 +76,17 @@ export default function List({ id, title, listItems, theme, index }) {
                   ref={provided.innerRef}
                   className="min-h-[1px]"
                 >
-                  {listItems?.map((item, index) => (
-                    <ListItemCard
-                      key={item.id}
-                      item={item}
-                      listId={id}
-                      index={index}
-                    />
-                  ))}
+                  {listItems.itemsOrderIds.map((itemId, index) => {
+                    const item = listItems[itemId];
+                    return (
+                      <ListItemCard
+                        key={item.id}
+                        item={item}
+                        listId={id}
+                        index={index}
+                      />
+                    );
+                  })}
                   {provided.placeholder}
                 </div>
               )}

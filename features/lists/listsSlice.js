@@ -1,84 +1,61 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 export const listsSlice = createSlice({
   name: "lists",
-  initialState: [],
+  initialState: { listsOrderIds: [] },
   reducers: {
     addList: (state, action) => {
-      state.push(action.payload);
+      state[action.payload.id] = action.payload;
+      state.listsOrderIds.push(action.payload.id);
     },
     initializeLists: (_, action) => action.payload,
-    updateListTitle: (state, action) =>
-      state.map((list) => {
-        if (list.id === action.payload.id) {
-          return { ...list, title: action.payload.newTitle };
-        }
-        return list;
-      }),
-    updateListsOrder: (state, action) => {
-      console.log(action.payload);
-      const { sourceIndex, destinationIndex } = action.payload;
-      const newState = [...state];
-      const newList = newState[sourceIndex];
-      newState.splice(sourceIndex, 1);
-      newState.splice(destinationIndex, 0, newList);
-      return newState;
+    updateListTitle: (state, action) => {
+      state[action.payload.id].title = action.payload.newTitle;
     },
-    addItem: (state, action) =>
-      state.map((list) => {
-        if (list.id === action.payload.listId) {
-          return { ...list, items: [...list.items, action.payload.item] };
-        }
-        return list;
-      }),
-    updateItem: (state, action) =>
-      state.map((list) => {
-        if (list.id === action.payload.listId) {
-          return {
-            ...list,
-            items: list.items.map((item) => {
-              if (item.id === action.payload.oldItem.id) {
-                return action.payload.newItem;
-              }
-              return item;
-            }),
-          };
-        }
-        return list;
-      }),
+    updateListsOrder: (state, action) => {
+      const { draggableId, sourceIndex, destinationIndex } = action.payload;
+      state.listsOrderIds.splice(sourceIndex, 1);
+      state.listsOrderIds.splice(destinationIndex, 0, draggableId);
+    },
+    addItem: (state, action) => {
+      const { listId, item } = action.payload;
+      state[listId].items[item.id] = item;
+      state[listId].items.itemsOrderIds.push(item.id);
+    },
+    updateItem: (state, action) => {
+      const { listId, itemId, newContent } = action.payload;
+      state[listId].items[itemId].content = newContent;
+    },
     updateListItemsOrder: (state, action) => {
       const {
-        draggableItem,
+        draggableId,
         sourceId,
         destinationId,
         sourceIndex,
         destinationIndex,
       } = action.payload;
 
-      return state.map((list) => {
-        if (list.id !== sourceId && list.id !== destinationId) return list;
-        const newItems = Array.from(list.items);
-        if (list.id === sourceId) {
-          newItems.splice(sourceIndex, 1);
-        }
-        if (list.id === destinationId) {
-          newItems.splice(destinationIndex, 0, draggableItem);
-        }
-        return { ...list, items: newItems };
-      });
+      if (sourceId !== destinationId) {
+        const draggedItem = state[sourceId].items[draggableId];
+        delete state[sourceId].items[draggableId];
+        state[destinationId].items[draggableId] = draggedItem;
+      }
+
+      state[sourceId].items.itemsOrderIds.splice(sourceIndex, 1);
+      state[destinationId].items.itemsOrderIds.splice(
+        destinationIndex,
+        0,
+        draggableId
+      );
     },
-    deleteItem: (state, action) =>
-      state.map((list) => {
-        if (list.id === action.payload.listId) {
-          return {
-            ...list,
-            items: list.items.filter(
-              (item) => item.id !== action.payload.item.id
-            ),
-          };
-        }
-        return list;
-      }),
+    deleteItem: (state, action) => {
+      const { item, listId } = action.payload;
+      const index = state[listId].items.itemsOrderIds.findIndex(
+        (itemOrderId) => itemOrderId === item.id
+      );
+      delete state[listId].items[item.id];
+      state[listId].items.itemsOrderIds.splice(index, 1);
+    },
   },
 });
 

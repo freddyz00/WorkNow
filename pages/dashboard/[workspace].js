@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState, useLayoutEffect } from "react";
 
 import { getSession } from "next-auth/react";
-import { resetServerContext } from "react-beautiful-dnd";
 
 import Loading from "../../components/Loading";
 import WorkspaceHeader from "../../components/WorkspaceHeader";
@@ -19,8 +18,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { initializeLists } from "../../features/lists/listsSlice";
 import { initializeWorkspaces } from "../../features/workspaces/workspacesSlice";
 import { initializeMessages } from "../../features/messages/messagesSlice";
-
-let count = 4;
 
 export default function Workspace({
   _session,

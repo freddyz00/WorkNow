@@ -21,8 +21,8 @@ export default function Card({ item, listId, index }) {
     dispatch(
       updateItem({
         listId,
-        newItem: { ...item, content: inputText },
-        oldItem: item,
+        itemId: item.id,
+        newContent: inputText,
       })
     );
     inputRef.current.blur();
@@ -30,8 +30,8 @@ export default function Card({ item, listId, index }) {
     await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/item`, {
       listId,
       workspaceId,
-      newItem: { ...item, content: inputText },
-      oldItem: item,
+      itemId: item.id,
+      newContent: inputText,
     });
   };
 
@@ -57,14 +57,16 @@ export default function Card({ item, listId, index }) {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          {/* <input
-            className="bg-white p-2 w-full rounded-md cursor-pointer focus:bg-white hover:bg-slate-200 transition ease-out duration-300"
-            type="text"
-            value={inputText}
-            ref={inputRef}
-            onChange={(e) => setInputText(e.target.value)}
-            onFocus={() => inputRef.current.select()}
-          /> */}
+          {/* <form onSubmit={handleSubmit}>
+            <input
+              className="bg-white p-2 w-full rounded-md cursor-pointer focus:bg-white hover:bg-slate-200 transition ease-out duration-300"
+              type="text"
+              value={inputText}
+              ref={inputRef}
+              onChange={(e) => setInputText(e.target.value)}
+              onFocus={() => inputRef.current.select()}
+            />
+          </form> */}
           <p className="bg-white p-2 w-full rounded-md">{content}</p>
 
           <div

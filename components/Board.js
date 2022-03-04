@@ -14,8 +14,12 @@ import { Droppable } from "react-beautiful-dnd";
 export default function Board({ data }) {
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log(data);
+  });
+
   const onDragEnd = (result) => {
-    const { source, destination, type } = result;
+    const { draggableId, source, destination, type } = result;
 
     if (!destination) {
       return;
@@ -28,17 +32,11 @@ export default function Board({ data }) {
       return;
     }
 
-    console.log(type);
-
     switch (type) {
       case "item":
-        const draggableItem = data.find(
-          (list) => list.id === source.droppableId
-        ).items[source.index];
-
         dispatch(
           updateListItemsOrder({
-            draggableItem: draggableItem,
+            draggableId: draggableId,
             sourceId: source.droppableId,
             destinationId: destination.droppableId,
             sourceIndex: source.index,
@@ -50,6 +48,7 @@ export default function Board({ data }) {
       case "list":
         dispatch(
           updateListsOrder({
+            draggableId,
             sourceIndex: source.index,
             destinationIndex: destination.index,
           })
@@ -69,16 +68,19 @@ export default function Board({ data }) {
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {data.map(({ id, title, theme, items }, index) => (
-              <List
-                id={id}
-                key={id}
-                index={index}
-                title={title}
-                listItems={items}
-                theme={theme}
-              />
-            ))}
+            {data.listsOrderIds.map((listId, index) => {
+              const { id, title, theme, items } = data[listId];
+              return (
+                <List
+                  id={id}
+                  key={id}
+                  index={index}
+                  title={title}
+                  listItems={items}
+                  theme={theme}
+                />
+              );
+            })}
             <NewList />
             {/* <Button
               title="Sign Out"

@@ -19,10 +19,10 @@ export default function NewList() {
   const theme = lightColorGenerator.generate();
 
   const handleSubmit = async (e) => {
-    const id = `list-${uuidv4()}`;
     e.preventDefault();
+    const id = `list-${uuidv4()}`;
     if (title) {
-      dispatch(addList({ id, title, theme, items: [] }));
+      dispatch(addList({ id, title, theme, items: { itemsOrderIds: [] } }));
 
       await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/list`, {
         id,
