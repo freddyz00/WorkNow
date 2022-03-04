@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import List from "./List";
 import NewList from "./NewList";
 import Button from "../components/Button";
@@ -10,15 +11,14 @@ import { signOut } from "next-auth/react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useEffect } from "react";
 import { Droppable } from "react-beautiful-dnd";
+import axios from "axios";
 
 export default function Board({ data }) {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { workspace: workspaceId } = router.query;
 
-  useEffect(() => {
-    console.log(data);
-  });
-
-  const onDragEnd = (result) => {
+  const onDragEnd = async (result) => {
     const { draggableId, source, destination, type } = result;
 
     if (!destination) {
@@ -34,6 +34,19 @@ export default function Board({ data }) {
 
     switch (type) {
       case "item":
+        axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/itemsorder`, {
+          workspaceId,
+          draggableId,
+          draggableItem: data[source.droppableId].items[draggableId],
+          sourceId: source.droppableId,
+          destinationId: destination.droppableId,
+          sourceItemsOrderIds: data[source.droppableId].items.itemsOrderIds,
+          destinationItemsOrderIds:
+            data[destination.droppableId].items.itemsOrderIds,
+          sourceIndex: source.index,
+          destinationIndex: destination.index,
+        });
+
         dispatch(
           updateListItemsOrder({
             draggableId: draggableId,
@@ -43,9 +56,18 @@ export default function Board({ data }) {
             destinationIndex: destination.index,
           })
         );
+
         return;
 
       case "list":
+        axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/listsorder`, {
+          workspaceId,
+          draggableId,
+          oldListsOrderIds: data.listsOrderIds,
+          sourceIndex: source.index,
+          destinationIndex: destination.index,
+        });
+
         dispatch(
           updateListsOrder({
             draggableId,
@@ -53,6 +75,7 @@ export default function Board({ data }) {
             destinationIndex: destination.index,
           })
         );
+
         return;
       default:
         return;
