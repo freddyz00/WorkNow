@@ -42,7 +42,7 @@ export default function Home({ _session }) {
       {/* nav bar */}
       <NavBar navRef={navRef} />
 
-      {/*  */}
+      {/* view on page load */}
       <section className="flex h-screen py-12 bg-gradient-to-t from-violet-100 to-white justify-center mb-28">
         <div className="container h-full columns-1 md:columns-2">
           {/* left */}
@@ -90,12 +90,12 @@ export default function Home({ _session }) {
         </div>
       </section>
 
-      <section className="container mx-auto grid grid-cols-2 mb-28 place-items-center">
-        <div className="justify-self-center ml-20">
-          <p className="text-3xl font-semibold mb-5">
+      <section className="container mx-auto grid grid-cols-1 md:grid-cols-2 mb-28 place-items-center">
+        <div className="justify-self-center md:ml-20">
+          <p className="text-3xl font-semibold mb-5 text-center md:text-left">
             Boost your productivity by keeping track of your tasks
           </p>
-          <p className="text-xl text-justify">
+          <p className="text-xl text-justify m-5 md:m-0">
             Add new task, sort existing lists, customize each individual item.
             You have full control.
           </p>
@@ -105,19 +105,19 @@ export default function Home({ _session }) {
         </div>
       </section>
 
-      <section className="container mx-auto grid grid-cols-2 mb-28 place-items-center">
-        <div className="justify-self-center">
+      <section className="container mx-auto grid grid-cols-1 md:grid-cols-2 mb-28 place-items-center">
+        <div className="justify-self-center order-1 md:order-0">
           <Image
             src="/images/chat-functionality.png"
             height="350"
             width="350"
           />
         </div>
-        <div className="justify-self-center mr-20">
-          <p className="text-3xl font-semibold mb-5">
+        <div className="justify-self-center md:mr-20 order-0 md:order-1">
+          <p className="text-3xl font-semibold mb-5 text-center md:text-left">
             Seamless communication between your team
           </p>
-          <p className="text-xl text-justify">
+          <p className="text-xl text-justify m-5 md:m-0">
             Embrace teamwork by communicating with members across different
             departments that are all working on the same project. Zero hassle
             indeed.
@@ -128,15 +128,15 @@ export default function Home({ _session }) {
       <Testimonials />
 
       <footer className="bg-gray-100">
-        <div className="container mx-auto flex justify-between items-center py-10">
-          <div>
-            <h1 className="font-righteous text-3xl">
+        <div className="container sm:mx-auto flex flex-col sm:flex-row justify-between items-center py-10">
+          <div className="mb-5 sm:mb-0">
+            <h1 className="font-righteous text-3xl text-center sm:text-left">
               <span className="text-yellow-500">Work</span>
               <span className="text-pink-500">Now</span>
             </h1>
             <p>© Copyright 2022. All rights reserved.</p>
           </div>
-          <div className="flex items-center">
+          <div className="flex flex-col sm:flex-row items-center">
             <a href="/">
               <p className="ml-5 hover:text-blue-700 hover:underline">
                 About us

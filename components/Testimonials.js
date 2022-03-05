@@ -57,7 +57,7 @@ export default function Testimonials() {
       <h3 className="text-3xl font-semibold text-center mb-10">
         See What People Are Saying About WorkNow
       </h3>
-      <div className="mx-auto h-72 bg-blue-100 rounded-2xl overflow-hidden relative group">
+      <div className="mx-auto h-72 bg-blue-100 rounded-2xl overflow-hidden relative group mx-5 md:mx-0">
         <div
           className={cn(
             "flex w-[300%] h-full shrink-0 transition-all duration-500",
