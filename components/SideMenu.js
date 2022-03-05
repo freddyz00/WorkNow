@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSelectedTab } from "../features/selectedTab/selectedTabSlice";
 
 import { BsKanban, BsFillChatLeftDotsFill } from "react-icons/bs";
+import { RiTeamFill } from "react-icons/ri";
 import { useRouter } from "next/router";
 
 const SideMenuItem = ({ title, selected, icon }) => {
@@ -53,9 +54,9 @@ export default function SideMenu() {
         icon={<BsKanban className="text-xl" />}
       />
       <SideMenuItem
-        title="Members"
-        selected={selectedTab === "Members"}
-        icon={<BsFillChatLeftDotsFill className="text-xl" />}
+        title="Team"
+        selected={selectedTab === "Team"}
+        icon={<RiTeamFill className="text-xl" />}
       />
       <SideMenuItem
         title="Chat"

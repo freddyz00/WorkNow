@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function Members() {
+export default function Team() {
   const arr = [1, 2, 3, 4, 1, 2, 2];
   return (
     <div className="p-5 grid grid-cols-6">

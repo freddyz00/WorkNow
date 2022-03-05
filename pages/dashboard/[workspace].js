@@ -8,7 +8,7 @@ import Loading from "../../components/Loading";
 import WorkspaceHeader from "../../components/WorkspaceHeader";
 import SideMenu from "../../components/SideMenu";
 import Board from "../../components/Board";
-import Members from "../../components/Members";
+import Team from "../../components/Team";
 import Chat from "../../components/Chat";
 
 import clientPromise from "../../lib/mongodb";
@@ -67,7 +67,7 @@ export default function Workspace({
           toggleSideMenu={() => setShowSideMenu(!showSideMenu)}
         />
         {selectedTab === "Board" && <Board data={listsStore} />}
-        {selectedTab === "Members" && <Members />}
+        {selectedTab === "Team" && <Team />}
         {selectedTab === "Chat" && (
           <Chat
             data={messagesStore.length > 0 ? messagesStore : messagesProps}

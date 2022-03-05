@@ -15,11 +15,11 @@ export default function Button({ title, large, type, icon, onPress }) {
           "text-xl px-8 py-3": large,
         },
         {
-          "bg-indigo-600 hover:bg-indigo-700 text-white border border-indigo-600 border-solid":
+          "bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 text-white border border-indigo-600 border-solid":
             type === "primary",
         },
         {
-          "bg-white hover:bg-slate-100 border border-slate-300 border-solid":
+          "bg-white hover:bg-slate-100 active:bg-slate-200 border border-slate-200 border-solid":
             type === "secondary",
         }
       )}

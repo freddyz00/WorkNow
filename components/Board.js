@@ -105,10 +105,10 @@ export default function Board({ data }) {
               );
             })}
             <NewList />
-            {/* <Button
+            <Button
               title="Sign Out"
               onPress={() => signOut({ callbackUrl: "/dashboard" })}
-            /> */}
+            />
             {provided.placeholder}
           </div>
         )}

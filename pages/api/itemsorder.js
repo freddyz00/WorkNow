@@ -32,10 +32,6 @@ export default async function handler(req, res) {
     } else {
       sourceItemsOrderIds.splice(sourceIndex, 1);
       destinationItemsOrderIds.splice(destinationIndex, 0, draggableId);
-
-      console.log("source", sourceItemsOrderIds);
-      console.log("destination", destinationItemsOrderIds);
-
       await db.collection("workspaces").updateOne(
         { _id: ObjectId(workspaceId) },
         {
@@ -53,12 +49,3 @@ export default async function handler(req, res) {
     res.status(200).json({});
   }
 }
-
-// workspaceId,
-// draggableId,
-// sourceId: source.droppableId,
-// destinationId: destination.droppableId,
-// sourceItemsOrderIds: data[source.id].items.itemsOrderIds,
-// destinationItemsOrderIds: data[destination.id].items.itemsOrderIds,
-// sourceIndex: source.index,
-// destinationIndex: destination.index,

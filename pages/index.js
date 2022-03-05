@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import NavBar from "../components/NavBar";
 import Button from "../components/Button";
 import Loading from "../components/Loading";
+import Testimonials from "../components/Testimonials";
 import Link from "next/link";
 
 export default function Home({ _session }) {
@@ -42,14 +43,14 @@ export default function Home({ _session }) {
       <NavBar navRef={navRef} />
 
       {/*  */}
-      <section className="flex h-screen py-12 bg-gradient-to-t from-blue-100 to-white justify-center mb-28">
+      <section className="flex h-screen py-12 bg-gradient-to-t from-violet-100 to-white justify-center mb-28">
         <div className="container h-full columns-1 md:columns-2">
           {/* left */}
           <div className="flex flex-col justify-center items-start h-full w-full pl-24 pr-12">
-            <h1 className="text-3xl md:text-5xl font-semibold leading-snug my-4">
+            <h1 className="text-3xl md:text-5xl font-semibold leading-snug my-5">
               Collaboration Made Simple.
             </h1>
-            <p className="text-lg md:text-xl mb-4">
+            <p className="text-lg md:text-xl mb-5">
               Manage all of your organization's projects, tasks, and activities.
               All your members, All in one place.
             </p>
@@ -94,10 +95,9 @@ export default function Home({ _session }) {
           <p className="text-3xl font-semibold mb-5">
             Boost your productivity by keeping track of your tasks
           </p>
-          <p className="text-xl">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum
-            veniam omnis, velit dolore ducimus natus distinctio saepe nesciunt
-            provident iste.
+          <p className="text-xl text-justify">
+            Add new task, sort existing lists, customize each individual item.
+            You have full control.
           </p>
         </div>
         <div className="justify-self-center">
@@ -117,13 +117,47 @@ export default function Home({ _session }) {
           <p className="text-3xl font-semibold mb-5">
             Seamless communication between your team
           </p>
-          <p className="text-xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
-            officia tenetur odit animi dicta, amet repellat laudantium nam.
-            Voluptate, architecto?
+          <p className="text-xl text-justify">
+            Embrace teamwork by communicating with members across different
+            departments that are all working on the same project. Zero hassle
+            indeed.
           </p>
         </div>
       </section>
+
+      <Testimonials />
+
+      <footer className="bg-gray-100">
+        <div className="container mx-auto flex justify-between items-center py-10">
+          <div>
+            <h1 className="font-righteous text-3xl">
+              <span className="text-yellow-500">Work</span>
+              <span className="text-pink-500">Now</span>
+            </h1>
+            <p>© Copyright 2022. All rights reserved.</p>
+          </div>
+          <div className="flex items-center">
+            <a href="/">
+              <p className="ml-5 hover:text-blue-700 hover:underline">
+                About us
+              </p>
+            </a>
+            <a href="/">
+              <p className="ml-5 hover:text-blue-700 hover:underline">
+                Contact us
+              </p>
+            </a>
+            <a href="/">
+              <p className="ml-5 hover:text-blue-700 hover:underline">Help</p>
+            </a>
+            <a href="/">
+              <p className="ml-5 hover:text-blue-700 hover:underline">
+                Privacy
+              </p>
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

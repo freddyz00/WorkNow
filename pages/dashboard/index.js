@@ -119,7 +119,7 @@ export default function Dashboard({ _session, workspaces }) {
           </div>
 
           {/* form input */}
-          <form className="flex flex-col">
+          <form className="flex flex-col" onSubmit={createNewWorkspace}>
             <label htmlFor="workspaceInput">Workspace Name</label>
             <input
               id="workspaceInput"
