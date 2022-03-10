@@ -83,8 +83,8 @@ export default function Chat({ data }) {
                 key={index}
                 text={text}
                 sender={sender}
-                isUserSender={false}
-                // isUserSender={sender.email === user.email}
+                // isUserSender={false}
+                isUserSender={sender.email === user.email}
               />
             </div>
           );

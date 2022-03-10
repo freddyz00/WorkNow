@@ -74,7 +74,7 @@ export default function Dashboard({ _session, workspaces }) {
           <WorkspaceCard id={id} key={id} title={title} theme={theme} />
         ))}
         <WorkspaceCard
-          title="Create a new workspace"
+          title="Create a workspace"
           theme="rgb(225 225 225)"
           newWorkspace
           showModal={() => setIsModalOpen(true)}
@@ -124,6 +124,7 @@ export default function Dashboard({ _session, workspaces }) {
             <input
               id="workspaceInput"
               type="text"
+              autoFocus
               autoComplete="off"
               value={workspaceInput}
               onChange={(e) => setWorkspaceInput(e.target.value)}
