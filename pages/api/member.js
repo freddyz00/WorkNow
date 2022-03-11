@@ -17,8 +17,6 @@ export default async function handler(req, res) {
         _id: ObjectId(workspaceId),
       });
 
-      console.log(user);
-
       await db.collection("users").updateOne(
         {
           _id: user._id,
@@ -39,7 +37,7 @@ export default async function handler(req, res) {
           _id: ObjectId(workspaceId),
         },
         {
-          $push: { members: user },
+          $push: { members: { ...user, _id: user._id.toString() } },
         }
       );
     } else {

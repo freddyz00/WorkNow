@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       messages: [],
       createdAt: new Date(),
       createdBy: { user },
-      members: [],
+      members: [user],
     });
 
     const workspaceId = result.insertedId.toString();

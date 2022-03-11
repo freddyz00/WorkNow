@@ -23,6 +23,7 @@ export default function Workspace({
   _session,
   listsProps,
   messagesProps,
+  membersProps,
   workspaces,
 }) {
   const { user } = _session;
@@ -67,7 +68,7 @@ export default function Workspace({
           toggleSideMenu={() => setShowSideMenu(!showSideMenu)}
         />
         {selectedTab === "Board" && <Board data={listsStore} />}
-        {selectedTab === "Team" && <Team />}
+        {selectedTab === "Team" && <Team members={membersProps} />}
         {selectedTab === "Chat" && (
           <Chat
             data={messagesStore.length > 0 ? messagesStore : messagesProps}
@@ -91,7 +92,7 @@ export async function getServerSideProps(context) {
     user.workspaces.filter((workspace) => workspace.id === workspaceId).length >
     0
   ) {
-    const { lists, messages } = await db
+    const { lists, messages, members } = await db
       .collection("workspaces")
       .findOne({ _id: ObjectId(workspaceId) });
     return {
@@ -99,6 +100,7 @@ export async function getServerSideProps(context) {
         _session: session,
         listsProps: lists || [],
         messagesProps: messages || [],
+        membersProps: members || [],
         workspaces: user.workspaces,
       },
     };

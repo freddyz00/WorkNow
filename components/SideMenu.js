@@ -12,7 +12,7 @@ const SideMenuItem = ({ title, selected, icon }) => {
     <div
       onClick={() => dispatch(setSelectedTab(title))}
       className={cn(
-        "flex items-center ml-3 mb-3 py-3 pl-5 rounded-l-full cursor-pointer",
+        "flex items-center ml-3 mb-3 py-3 pl-5 rounded-l-full cursor-pointer transition",
         {
           "bg-white": selected,
           "hover:bg-slate-200": !selected,

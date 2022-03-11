@@ -10,6 +10,8 @@ import Loading from "../components/Loading";
 import Testimonials from "../components/Testimonials";
 import Link from "next/link";
 
+import Fade from "react-reveal/Fade";
+
 export default function Home({ _session }) {
   const navRef = useRef();
   const router = useRouter();
@@ -73,59 +75,67 @@ export default function Home({ _session }) {
         </div>
       </section>
 
-      <section className="container mx-auto mb-28">
-        <h2 className="text-3xl font-semibold mx-20 text-center mb-5">
-          Keep all your work neat, clean, and organized.
-        </h2>
-        <p className="mx-20 text-xl text-center mb-5">
-          Achieve greater work efficiency by integrating different tools into
-          your workflow
-        </p>
-        <div className="mx-20 text-center ">
-          <Link href="/signup">
-            <a>
-              <Button title="Start Working" type="primary" large />
-            </a>
-          </Link>
-        </div>
-      </section>
+      <Fade bottom>
+        <section className="container mx-auto mb-28">
+          <h2 className="text-3xl font-semibold mx-20 text-center mb-5">
+            Keep all your work neat, clean, and organized.
+          </h2>
+          <p className="mx-20 text-xl text-center mb-5">
+            Achieve greater work efficiency by integrating different tools into
+            your workflow
+          </p>
+          <div className="mx-20 text-center ">
+            <Link href="/signup">
+              <a>
+                <Button title="Start Working" type="primary" large />
+              </a>
+            </Link>
+          </div>
+        </section>
+      </Fade>
 
-      <section className="container mx-auto grid grid-cols-1 md:grid-cols-2 mb-28 place-items-center">
-        <div className="justify-self-center md:ml-20">
-          <p className="text-3xl font-semibold mb-5 text-center md:text-left">
-            Boost your productivity by keeping track of your tasks
-          </p>
-          <p className="text-xl text-justify m-5 md:m-0">
-            Add new task, sort existing lists, customize each individual item.
-            You have full control.
-          </p>
-        </div>
-        <div className="justify-self-center">
-          <Image src="/images/to-do.png" height="350" width="350" />
-        </div>
-      </section>
+      <Fade bottom>
+        <section className="container mx-auto grid grid-cols-1 md:grid-cols-2 mb-28 place-items-center">
+          <div className="justify-self-center md:ml-20">
+            <p className="text-3xl font-semibold mb-5 text-center md:text-left">
+              Boost your productivity by keeping track of your tasks
+            </p>
+            <p className="text-xl text-justify m-5 md:m-0">
+              Add new task, sort existing lists, customize each individual item.
+              You have full control.
+            </p>
+          </div>
+          <div className="justify-self-center">
+            <Image src="/images/to-do.png" height="350" width="350" />
+          </div>
+        </section>
+      </Fade>
 
-      <section className="container mx-auto grid grid-cols-1 md:grid-cols-2 mb-28 place-items-center">
-        <div className="justify-self-center order-1 md:order-0">
-          <Image
-            src="/images/chat-functionality.png"
-            height="350"
-            width="350"
-          />
-        </div>
-        <div className="justify-self-center md:mr-20 order-0 md:order-1">
-          <p className="text-3xl font-semibold mb-5 text-center md:text-left">
-            Seamless communication between your team
-          </p>
-          <p className="text-xl text-justify m-5 md:m-0">
-            Embrace teamwork by communicating with members across different
-            departments that are all working on the same project. Zero hassle
-            indeed.
-          </p>
-        </div>
-      </section>
+      <Fade bottom>
+        <section className="container mx-auto grid grid-cols-1 md:grid-cols-2 mb-28 place-items-center">
+          <div className="justify-self-center order-1 md:order-0">
+            <Image
+              src="/images/chat-functionality.png"
+              height="350"
+              width="350"
+            />
+          </div>
+          <div className="justify-self-center md:mr-20 order-0 md:order-1">
+            <p className="text-3xl font-semibold mb-5 text-center md:text-left">
+              Seamless communication between your team
+            </p>
+            <p className="text-xl text-justify m-5 md:m-0">
+              Embrace teamwork by communicating with members across different
+              departments that are all working on the same project. Zero hassle
+              indeed.
+            </p>
+          </div>
+        </section>
+      </Fade>
 
-      <Testimonials />
+      <Fade bottom>
+        <Testimonials />
+      </Fade>
 
       <footer className="bg-gray-100">
         <div className="container sm:mx-auto flex flex-col sm:flex-row justify-between items-center py-10">

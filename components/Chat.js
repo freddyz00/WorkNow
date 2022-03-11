@@ -9,7 +9,7 @@ import axios from "axios";
 const Message = ({ text, sender, isUserSender }) => {
   if (isUserSender) {
     return (
-      <div className="flex mb-5 ml-auto">
+      <div className="flex mb-5 ml-auto items-center">
         {/* message */}
         <div className="flex-1">
           <p className="break-all">{text}</p>

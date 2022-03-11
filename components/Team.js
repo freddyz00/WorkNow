@@ -6,7 +6,7 @@ import Button from "./Button";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-export default function Team() {
+export default function Team({ members }) {
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const router = useRouter();
@@ -45,21 +45,26 @@ export default function Team() {
         {/* name */}
         <p className="text-2xl font-bold mt-2">Invite</p>
       </div>
-      {arr.map((_) => (
-        <div className="flex flex-col items-center mb-10 cursor-pointer">
+      {members.map(({ name, image }, index) => (
+        <div
+          className="flex flex-col items-center mb-10 cursor-pointer"
+          key={index}
+        >
           {/* image */}
           <div>
             <Image
-              src="https://lh3.googleusercontent.com/a/AATXAJysgatRjvTIulIPGT4P3121vSttWG31a_TDAPk4=s96-c"
+              src={image}
               width={100}
               height={100}
               className="rounded-full"
             />
           </div>
           {/* name */}
-          <p className="text-2xl font-bold mt-2">Kami No</p>
+          <p className="text-2xl font-bold mt-2">{name}</p>
         </div>
       ))}
+
+      {/* Invite a new member modal */}
       <ReactModal
         isOpen={isInviteModalOpen}
         onRequestClose={handleCloseModal}

@@ -89,7 +89,7 @@ export default function Testimonials() {
           ))}
         </div>
         <div
-          className="absolute left-0 top-0 flex items-center h-full opacity-0"
+          className="absolute left-0 top-0 flex items-center h-full opacity-0 group-hover:opacity-100 transition"
           onClick={() => {
             if (currentIndex === 0) {
               setCurrentIndex(testimonials.length - 1);
@@ -98,11 +98,11 @@ export default function Testimonials() {
             }
           }}
         >
-          <BsChevronCompactLeft className="text-5xl text-white cursor-pointer" />
+          <BsChevronCompactLeft className="text-5xl text-white cursor-pointer hover:text-slate-50 transition" />
         </div>
         <div className="absolute right-0 top-0 flex items-center h-full opacity-0 group-hover:opacity-100 transition">
           <BsChevronCompactRight
-            className="text-5xl text-white cursor-pointer group-hover:opacity-100 transition"
+            className="text-5xl text-white cursor-pointer hover:text-slate-50 transition"
             onClick={() => {
               if (currentIndex === testimonials.length - 1) {
                 setCurrentIndex(0);
