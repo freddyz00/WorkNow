@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 
 import { getSession } from "next-auth/react";
 
@@ -27,14 +27,11 @@ export default function Workspace({
   workspaces,
 }) {
   const { user } = _session;
-  const [showSideMenu, setShowSideMenu] = useState(false);
   const listsStore = useSelector((state) => state.lists);
   const messagesStore = useSelector((state) => state.messages);
   const selectedTab = useSelector((state) => state.selectedTab);
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const closeSideMenu = () => setShowSideMenu(false);
 
   useLayoutEffect(() => {
     dispatch(initializeLists(listsProps));
@@ -56,17 +53,12 @@ export default function Workspace({
         <title>WorkNow</title>
       </Head>
 
-      {showSideMenu && (
-        <div>
-          <SideMenu closeSideMenu={closeSideMenu} />
-        </div>
-      )}
+      <div className="w-1/6">
+        <SideMenu />
+      </div>
 
       <div className="flex flex-col flex-1 h-screen max-h-screen overflow-hidden relative">
-        <WorkspaceHeader
-          user={user}
-          toggleSideMenu={() => setShowSideMenu(!showSideMenu)}
-        />
+        <WorkspaceHeader user={user} />
         {selectedTab === "Board" && <Board data={listsStore} />}
         {selectedTab === "Team" && <Team members={membersProps} />}
         {selectedTab === "Chat" && (

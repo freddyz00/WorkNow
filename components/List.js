@@ -53,17 +53,21 @@ export default function List({ id, title, listItems, theme, index }) {
     <Draggable draggableId={id} index={index}>
       {(provided) => (
         <section
-          className="flex flex-col m-3 rounded-b-md h-fit max-h-full shadow-md"
+          className="flex flex-col m-3 rounded-b-md h-fit shadow-md"
           {...provided.draggableProps}
           ref={provided.innerRef}
         >
-          <div id="color" className="h-3" {...provided.dragHandleProps} />
-          <div className="flex flex-col w-80 h-fit max-h-full p-3 bg-slate-100 border border-solid border-slate-200 rounded-b-md transition ease-out duration-300">
-            <form onSubmit={handleSubmitTitle}>
+          <div
+            id="color"
+            className="h-3 shrink-0"
+            {...provided.dragHandleProps}
+          />
+          <div className="flex flex-col w-72 py-3 bg-white border border-solid border-slate-200 rounded-b-md transition ease-out duration-300">
+            <form onSubmit={handleSubmitTitle} className="px-3">
               <input
                 ref={titleRef}
                 type="text"
-                className="w-full text-lg font-semibold mb-3 px-2 bg-transparent rounded-md cursor-pointer border-none outline-none transtion ease-out duration-300 hover:bg-slate-200 focus:bg-white"
+                className="w-full font-semibold mb-3 px-2 bg-transparent rounded-md cursor-pointer border-none outline-none transtion ease-out duration-300 hover:bg-slate-200 focus:bg-white"
                 value={titleInput}
                 onChange={(e) => setTitleInput(e.target.value)}
                 onFocus={() => titleRef.current.select()}
@@ -74,7 +78,7 @@ export default function List({ id, title, listItems, theme, index }) {
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  className="min-h-[1px]"
+                  className="min-h-[1px] max-h-96 overflow-y-auto"
                 >
                   {listItems.itemsOrderIds.map((itemId, index) => {
                     const item = listItems[itemId];
@@ -92,7 +96,7 @@ export default function List({ id, title, listItems, theme, index }) {
               )}
             </Droppable>
 
-            <form onSubmit={handleSubmitNewItem}>
+            <form onSubmit={handleSubmitNewItem} className="px-3">
               <input
                 ref={newItemInputRef}
                 className="w-full p-2 bg-transparent rounded-md cursor-pointer border-none outline-none transition ease-out duration-300 placeholder:text-slate-500 hover:bg-slate-200 focus:bg-white focus:placeholder:text-white"

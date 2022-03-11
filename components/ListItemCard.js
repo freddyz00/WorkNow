@@ -65,7 +65,7 @@ export default function Card({ item, listId, index }) {
       {(provided) => (
         <div
           onSubmit={handleSubmit}
-          className="flex group items-center relative mb-3"
+          className="flex group items-center relative mb-3 px-3"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -78,7 +78,7 @@ export default function Card({ item, listId, index }) {
             })}
           >
             <input
-              className="bg-white p-2 w-full rounded-md cursor-pointer break-all break-words focus:bg-white hover:bg-slate-200 transition ease-out duration-300"
+              className="bg-slate-50 p-2 w-full rounded-md cursor-pointer break-all break-words focus:bg-slate-100 transition ease-out duration-300"
               type="text"
               value={inputText}
               ref={inputRef}
@@ -90,22 +90,25 @@ export default function Card({ item, listId, index }) {
           </form>
 
           <p
-            className={cn("bg-white p-2 w-full rounded-md break-all", {
-              hidden: isEditing,
-            })}
+            className={cn(
+              "bg-slate-50 p-2 w-full rounded-md break-all hover:bg-slate-200",
+              {
+                hidden: isEditing,
+              }
+            )}
           >
             {content}
           </p>
 
           <div
             onClick={handleEdit}
-            className="absolute opacity-0 right-10 rounded-md p-1 text-white bg-blue-500 border border-solid hover:border-blue-500 active:bg-blue-600 group-hover:opacity-100 text-xl cursor-pointer"
+            className="absolute opacity-0 right-[52px] rounded-md p-1 text-white bg-blue-500 border border-solid hover:border-blue-500 active:bg-blue-600 group-hover:opacity-100 text-xl cursor-pointer"
           >
             <BiEdit />
           </div>
           <div
             onClick={handleDelete}
-            className="absolute opacity-0 right-2 rounded-md p-1 text-white bg-red-500 border border-solid hover:border-red-500 active:bg-red-600 group-hover:opacity-100 text-xl cursor-pointer"
+            className="absolute opacity-0 right-5 rounded-md p-1 text-white bg-red-500 border border-solid hover:border-red-500 active:bg-red-600 group-hover:opacity-100 text-xl cursor-pointer"
           >
             <RiDeleteBin6Line />
           </div>

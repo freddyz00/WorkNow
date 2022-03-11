@@ -6,6 +6,14 @@ import Button from "./Button";
 import axios from "axios";
 import { useRouter } from "next/router";
 
+const MemberCard = ({ children }) => {
+  return (
+    <div className="flex flex-col items-center w-full h-56 p-3 bg-white rounded-md shadow-md hover:scale-105 transition ease-out">
+      {children}
+    </div>
+  );
+};
+
 export default function Team({ members }) {
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [emailInput, setEmailInput] = useState("");
@@ -32,36 +40,35 @@ export default function Team({ members }) {
   };
 
   return (
-    <div className="p-5 grid grid-cols-6">
+    <div className="p-3 grid grid-cols-5 gap-3 bg-neutral-100 h-full overflow-y-scroll">
       {/* add a member */}
-      <div
-        className="flex flex-col items-center mb-10 cursor-pointer"
-        onClick={() => setIsInviteModalOpen(true)}
-      >
-        {/* image */}
-        <div className="grid place-items-center w-[100px] h-[100px] mb-[7px] bg-slate-400 rounded-full">
-          <p className="text-white text-5xl font-bold">+</p>
-        </div>
-        {/* name */}
-        <p className="text-2xl font-bold mt-2">Invite</p>
-      </div>
-      {members.map(({ name, image }, index) => (
+      <MemberCard>
         <div
-          className="flex flex-col items-center mb-10 cursor-pointer"
-          key={index}
+          className="flex flex-col justify-center items-center h-full w-full my-auto cursor-pointer"
+          onClick={() => setIsInviteModalOpen(true)}
         >
-          {/* image */}
-          <div>
+          <div className="grid place-items-center w-[60px] h-[60px] mb-[7px] bg-gray-400 rounded-full">
+            <p className="text-white text-5xl font-bold">+</p>
+          </div>
+          <p className="text-xl font-medium text-gray-400 mt-2">Invite</p>
+        </div>
+      </MemberCard>
+
+      {/* team members */}
+      {members.map(({ name, image, email }, index) => (
+        <MemberCard key={index}>
+          <div className="mt-8">
             <Image
               src={image}
-              width={100}
-              height={100}
+              width={75}
+              height={75}
               className="rounded-full"
             />
           </div>
-          {/* name */}
-          <p className="text-2xl font-bold mt-2">{name}</p>
-        </div>
+
+          <p className="font-bold mt-4 break-all text-center">{name}</p>
+          <p className="text-sm break-all text-center">{email}</p>
+        </MemberCard>
       ))}
 
       {/* Invite a new member modal */}

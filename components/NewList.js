@@ -39,7 +39,7 @@ export default function NewList() {
   return (
     <div className="flex flex-col m-3 rounded-b-md">
       <div className="h-3 bg-slate-200" />
-      <div className="flex flex-col w-80 h-fit p-3 bg-slate-100 border border-solid border-slate-200 rounded-b-md transition ease-out duration-300">
+      <div className="flex flex-col w-72 h-fit p-3 bg-slate-100 border border-solid border-slate-200 rounded-b-md transition ease-out duration-300">
         <form onSubmit={handleSubmit}>
           <input
             ref={titleRef}

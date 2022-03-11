@@ -87,7 +87,7 @@ export default function Board({ data }) {
       <Droppable droppableId="board" direction="horizontal" type="list">
         {(provided) => (
           <div
-            className="flex flex-1 max-h-full overflow-x-scroll px-5"
+            className="flex flex-1 max-h-full overflow-x-scroll px-5 bg-neutral-100"
             {...provided.droppableProps}
             ref={provided.innerRef}
           >

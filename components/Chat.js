@@ -9,29 +9,39 @@ import axios from "axios";
 const Message = ({ text, sender, isUserSender }) => {
   if (isUserSender) {
     return (
-      <div className="flex mb-5 ml-auto items-center">
+      <div className="flex mb-5 ml-auto items-start">
         {/* message */}
-        <div className="flex-1">
-          <p className="break-all">{text}</p>
+        <div className="bg-rose-400 px-3 py-2 rounded-lg">
+          <p className="break-all text-white">{text}</p>
         </div>
 
         {/* profile picture */}
-        <div className="ml-5">
-          <Image src={sender.image} height={35} width={35} />
+        <div className="flex shrink-0 ml-5">
+          <Image
+            src={sender.image}
+            height={35}
+            width={35}
+            className="rounded-full"
+          />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex mb-5">
+    <div className="flex mb-5 items-start">
       {/* profile picture */}
       <div className="mr-5">
-        <Image src={sender.image} height={35} width={35} />
+        <Image
+          src={sender.image}
+          height={35}
+          width={35}
+          className="rounded-full"
+        />
       </div>
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col bg-gray-100 px-3 py-2 rounded-lg">
         {/* name */}
-        <p className="text-lg font-bold leading-none mb-1">{sender.name}</p>
+        <p className="font-bold leading-none mb-1">{sender.name}</p>
         {/* message */}
         <p className="break-all">{text}</p>
       </div>
