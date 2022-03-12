@@ -26,7 +26,7 @@ export default function WorkspaceCard({
       }
     >
       <p
-        className={cn("text-2xl font-semibold", {
+        className={cn("text-2xl font-semibold text-center px-5", {
           "text-white": !newWorkspace,
         })}
       >
