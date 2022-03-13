@@ -18,6 +18,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { initializeLists } from "../../features/lists/listsSlice";
 import { initializeWorkspaces } from "../../features/workspaces/workspacesSlice";
 import { initializeMessages } from "../../features/messages/messagesSlice";
+import { addMessage } from "../../features/messages/messagesSlice";
+
+import Pusher from "pusher-js";
 
 export default function Workspace({
   _session,
@@ -42,6 +45,29 @@ export default function Workspace({
   useEffect(() => {
     if (!_session) {
       router.push("/login");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (_session) {
+      const pusher = new Pusher(process.env.NEXT_PUBLIC_CHANNELS_KEY, {
+        authEndpoint: "http://localhost:3000/api/pusher/auth",
+        cluster: process.env.NEXT_PUBLIC_CHANNELS_CLUSTER,
+      });
+
+      const workspacesChannel = pusher.subscribe("private-workspaces");
+
+      workspacesChannel.bind("new-message", (data) => {
+        if (data.sender.email !== user.email) {
+          dispatch(addMessage(data));
+        }
+      });
+
+      return () => {
+        workspacesChannel.unbind_all();
+        workspacesChannel.unsubscribe();
+        pusher.disconnect();
+      };
     }
   }, []);
 

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -88,9 +88,12 @@ export default function Chat({ data }) {
         {data.map(({ text, sender }, index) => {
           const lastMessage = data.length - 1 === index;
           return (
-            <div className="flex" ref={lastMessage ? lastRef : null}>
+            <div
+              className="flex"
+              ref={lastMessage ? lastRef : null}
+              key={index}
+            >
               <Message
-                key={index}
                 text={text}
                 sender={sender}
                 // isUserSender={false}

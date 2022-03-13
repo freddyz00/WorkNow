@@ -4,7 +4,7 @@ export const workspacesSlice = createSlice({
   name: "workspaces",
   initialState: [],
   reducers: {
-    initializeWorkspaces: (state, action) => action.payload,
+    initializeWorkspaces: (_, action) => action.payload,
   },
 });
 
