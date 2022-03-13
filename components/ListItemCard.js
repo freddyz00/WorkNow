@@ -77,7 +77,6 @@ export default function Card({ item, listId, index }) {
           <form
             onSubmit={handleSubmit}
             className={cn("w-full h-full z-10", {
-              inline: isEditing,
               hidden: !isEditing,
             })}
           >

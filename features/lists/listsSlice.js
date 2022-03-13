@@ -9,8 +9,16 @@ export const listsSlice = createSlice({
       state.listsOrderIds.push(action.payload.id);
     },
     initializeLists: (_, action) => action.payload,
+    // updateListTitle: (state, action) => ({
+    //   ...state,
+    //   [action.payload.id]: {
+    //     ...state[action.payload.id],
+    //     title: action.payload.newTitle,
+    //   },
+    // }),
     updateListTitle: (state, action) => {
-      state[action.payload.id].title = action.payload.newTitle;
+      const { id, newTitle } = action.payload;
+      state[id].title = newTitle;
     },
     updateListsOrder: (state, action) => {
       const { draggableId, sourceIndex, destinationIndex } = action.payload;

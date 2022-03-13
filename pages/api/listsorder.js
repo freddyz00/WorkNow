@@ -15,14 +15,6 @@ export default async function handler(req, res) {
     const client = await clientPromise;
     const db = client.db();
 
-    // dispatch(
-    //   updateListsOrder({
-    //     draggableId,
-    //     sourceIndex: source.index,
-    //     destinationIndex: destination.index,
-    //   })
-    // );
-
     pusher.trigger("private-workspaces", "update-lists-order", {
       order: {
         draggableId,

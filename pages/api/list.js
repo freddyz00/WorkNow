@@ -43,8 +43,6 @@ export default async function handler(req, res) {
     const client = await clientPromise;
     const db = client.db();
 
-    // dispatch(updateListTitle({ id, newTitle: titleInput }));
-
     pusher.trigger("private-workspaces", "update-list-title", {
       list: {
         id,
