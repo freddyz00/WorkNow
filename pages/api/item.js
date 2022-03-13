@@ -1,11 +1,20 @@
 import clientPromise from "../../lib/mongodb";
 import { ObjectId } from "mongodb";
+import { pusher } from "../../lib/pusher";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { item, workspaceId, listId } = req.body;
+    const { item, workspaceId, listId, updatedBy } = req.body;
     const client = await clientPromise;
     const db = client.db();
+
+    pusher.trigger("private-workspaces", "new-item", {
+      item: {
+        listId: listId,
+        item: item,
+      },
+      updatedBy,
+    });
 
     // add item to appropriate list
     await db.collection("workspaces").updateOne(
@@ -20,9 +29,18 @@ export default async function handler(req, res) {
 
     res.status(200).json({});
   } else if (req.method === "PUT") {
-    const { workspaceId, newContent, itemId, listId } = req.body;
+    const { workspaceId, newContent, itemId, listId, updatedBy } = req.body;
     const client = await clientPromise;
     const db = client.db();
+
+    pusher.trigger("private-workspaces", "update-item", {
+      item: {
+        listId,
+        itemId,
+        newContent,
+      },
+      updatedBy,
+    });
 
     // find appropriate list and update the title
     await db.collection("workspaces").updateOne(
@@ -38,9 +56,17 @@ export default async function handler(req, res) {
 
     res.status(200).json({});
   } else if (req.method === "DELETE") {
-    const { item, workspaceId, listId } = req.body;
+    const { item, workspaceId, listId, updatedBy } = req.body;
     const client = await clientPromise;
     const db = client.db();
+
+    pusher.trigger("private-workspaces", "delete-item", {
+      item: {
+        listId,
+        item,
+      },
+      updatedBy,
+    });
 
     // remove item from list
     await db.collection("workspaces").updateOne(

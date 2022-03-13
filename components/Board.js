@@ -2,21 +2,22 @@ import { useRouter } from "next/router";
 import List from "./List";
 import NewList from "./NewList";
 import Button from "../components/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   updateListsOrder,
   updateListItemsOrder,
 } from "../features/lists/listsSlice";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { DragDropContext } from "react-beautiful-dnd";
-import { useEffect } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import axios from "axios";
 
-export default function Board({ data }) {
+export default function Board() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { workspace: workspaceId } = router.query;
+  const lists = useSelector((state) => state.lists);
+  const { data: session } = useSession();
 
   const onDragEnd = async (result) => {
     const { draggableId, source, destination, type } = result;
@@ -37,14 +38,15 @@ export default function Board({ data }) {
         axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/itemsorder`, {
           workspaceId,
           draggableId,
-          draggableItem: data[source.droppableId].items[draggableId],
+          draggableItem: lists[source.droppableId].items[draggableId],
           sourceId: source.droppableId,
           destinationId: destination.droppableId,
-          sourceItemsOrderIds: data[source.droppableId].items.itemsOrderIds,
+          sourceItemsOrderIds: lists[source.droppableId].items.itemsOrderIds,
           destinationItemsOrderIds:
-            data[destination.droppableId].items.itemsOrderIds,
+            lists[destination.droppableId].items.itemsOrderIds,
           sourceIndex: source.index,
           destinationIndex: destination.index,
+          updatedBy: session.user,
         });
 
         dispatch(
@@ -63,9 +65,10 @@ export default function Board({ data }) {
         axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/listsorder`, {
           workspaceId,
           draggableId,
-          oldListsOrderIds: data.listsOrderIds,
+          oldListsOrderIds: lists.listsOrderIds,
           sourceIndex: source.index,
           destinationIndex: destination.index,
+          updatedBy: session.user,
         });
 
         dispatch(
@@ -91,8 +94,8 @@ export default function Board({ data }) {
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {data.listsOrderIds.map((listId, index) => {
-              const { id, title, theme, items } = data[listId];
+            {lists.listsOrderIds.map((listId, index) => {
+              const { id, title, theme, items } = lists[listId];
               return (
                 <List
                   id={id}
@@ -104,12 +107,12 @@ export default function Board({ data }) {
                 />
               );
             })}
+            {provided.placeholder}
             <NewList />
             <Button
               title="Sign Out"
               onPress={() => signOut({ callbackUrl: "/dashboard" })}
             />
-            {provided.placeholder}
           </div>
         )}
       </Droppable>

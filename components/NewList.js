@@ -7,11 +7,12 @@ import { addList } from "../features/lists/listsSlice";
 
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import { useSession } from "next-auth/react";
 
 export default function NewList() {
   const titleRef = useRef();
   const [title, setTitle] = useState("");
-
+  const { data: session } = useSession();
   const router = useRouter();
   const { workspace: workspaceId } = router.query;
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export default function NewList() {
         workspaceId,
         title,
         theme,
+        updatedBy: session.user,
       });
 
       setTitle("");

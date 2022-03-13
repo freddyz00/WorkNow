@@ -15,7 +15,16 @@ import clientPromise from "../../lib/mongodb";
 import { ObjectId } from "mongodb";
 
 import { useSelector, useDispatch } from "react-redux";
-import { initializeLists } from "../../features/lists/listsSlice";
+import {
+  addItem,
+  addList,
+  deleteItem,
+  initializeLists,
+  updateItem,
+  updateListItemsOrder,
+  updateListsOrder,
+  updateListTitle,
+} from "../../features/lists/listsSlice";
 import { initializeWorkspaces } from "../../features/workspaces/workspacesSlice";
 import { initializeMessages } from "../../features/messages/messagesSlice";
 import { addMessage } from "../../features/messages/messagesSlice";
@@ -63,6 +72,48 @@ export default function Workspace({
         }
       });
 
+      workspacesChannel.bind("new-list", (data) => {
+        if (data.updatedBy.email !== user.email) {
+          dispatch(addList(data.list));
+        }
+      });
+
+      workspacesChannel.bind("update-list-title", (data) => {
+        if (data.updatedBy.email !== user.email) {
+          dispatch(updateListTitle(data.list));
+        }
+      });
+
+      workspacesChannel.bind("new-item", (data) => {
+        if (data.updatedBy.email !== user.email) {
+          dispatch(addItem(data.item));
+        }
+      });
+
+      workspacesChannel.bind("update-item", (data) => {
+        if (data.updatedBy.email !== user.email) {
+          dispatch(updateItem(data.item));
+        }
+      });
+
+      workspacesChannel.bind("delete-item", (data) => {
+        if (data.updatedBy.email !== user.email) {
+          dispatch(deleteItem(data.item));
+        }
+      });
+
+      workspacesChannel.bind("update-list-items-order", (data) => {
+        if (data.updatedBy.email !== user.email) {
+          dispatch(updateListItemsOrder(data.order));
+        }
+      });
+
+      workspacesChannel.bind("update-lists-order", (data) => {
+        if (data.updatedBy.email !== user.email) {
+          dispatch(updateListsOrder(data.order));
+        }
+      });
+
       return () => {
         workspacesChannel.unbind_all();
         workspacesChannel.unsubscribe();
@@ -85,7 +136,7 @@ export default function Workspace({
 
       <div className="flex flex-col flex-1 h-screen max-h-screen overflow-hidden relative">
         <WorkspaceHeader user={user} />
-        {selectedTab === "Board" && <Board data={listsStore} />}
+        {selectedTab === "Board" && <Board />}
         {selectedTab === "Team" && <Team members={membersProps} />}
         {selectedTab === "Chat" && (
           <Chat

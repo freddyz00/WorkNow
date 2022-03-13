@@ -165,10 +165,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        _session: {
-          ...session,
-          user: { ...session.user, id: user._id.toString() },
-        },
+        _session: session,
         workspaces,
       },
     };

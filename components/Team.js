@@ -19,7 +19,6 @@ export default function Team({ members }) {
   const [emailInput, setEmailInput] = useState("");
   const router = useRouter();
   const { workspace: workspaceId } = router.query;
-  const arr = [1, 2, 3, 4, 1, 2, 2];
 
   const handleCloseModal = () => {
     setIsInviteModalOpen(false);

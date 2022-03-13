@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
       await db.collection("users").updateOne(
         {
-          _id: user._id,
+          email: user.email,
         },
         {
           $push: {
@@ -37,7 +37,9 @@ export default async function handler(req, res) {
           _id: ObjectId(workspaceId),
         },
         {
-          $push: { members: { ...user, _id: user._id.toString() } },
+          $push: {
+            members: { name: user.name, email: user.email, image: user.image },
+          },
         }
       );
     } else {

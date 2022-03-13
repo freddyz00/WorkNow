@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { getSession, useSession } from "next-auth/react";
-import { useState, useEffect, useRef } from "react";
+import { getSession } from "next-auth/react";
+import { useEffect, useRef } from "react";
 
 import NavBar from "../components/NavBar";
 import Button from "../components/Button";

@@ -6,10 +6,12 @@ import { addItem, updateListTitle } from "../features/lists/listsSlice";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { Droppable, Draggable } from "react-beautiful-dnd";
+import { useSession } from "next-auth/react";
 
 export default function List({ id, title, listItems, theme, index }) {
   const router = useRouter();
   const { workspace: workspaceId } = router.query;
+  const { data: session } = useSession();
   const newItemInputRef = useRef();
   const titleRef = useRef();
   const [titleInput, setTitleInput] = useState(title);
@@ -34,6 +36,7 @@ export default function List({ id, title, listItems, theme, index }) {
         item: { id: itemId, content: tempContent },
         workspaceId,
         listId: id,
+        updatedBy: session.user,
       });
     }
   };
@@ -46,6 +49,7 @@ export default function List({ id, title, listItems, theme, index }) {
       workspaceId,
       newTitle: titleInput,
       id,
+      updatedBy: session.user,
     });
   };
 

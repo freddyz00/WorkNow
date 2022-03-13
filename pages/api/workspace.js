@@ -41,7 +41,7 @@ export default async function handler(req, res) {
       },
       messages: [],
       createdAt: new Date(),
-      createdBy: { user },
+      createdBy: user,
       members: [user],
     });
 
@@ -49,7 +49,7 @@ export default async function handler(req, res) {
 
     // add workspace to users collection
     await db.collection("users").updateOne(
-      { _id: ObjectId(user.id) },
+      { email: user.email },
       {
         $push: {
           workspaces: { title, theme, id: workspaceId },

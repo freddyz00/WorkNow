@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
+import { useSession } from "next-auth/react";
 import { updateItem } from "../features/lists/listsSlice";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BiEdit } from "react-icons/bi";
@@ -14,6 +15,7 @@ export default function Card({ item, listId, index }) {
   const [inputText, setInputText] = useState(content);
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef();
+  const { data: session } = useSession();
 
   const router = useRouter();
   const { workspace: workspaceId } = router.query;
@@ -24,7 +26,7 @@ export default function Card({ item, listId, index }) {
     dispatch(
       updateItem({
         listId,
-        itemId: item.id,
+        itemId: id,
         newContent: inputText,
       })
     );
@@ -33,8 +35,9 @@ export default function Card({ item, listId, index }) {
     await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/item`, {
       listId,
       workspaceId,
-      itemId: item.id,
+      itemId: id,
       newContent: inputText,
+      updatedBy: session.user,
     });
   };
 
@@ -56,6 +59,7 @@ export default function Card({ item, listId, index }) {
         listId,
         workspaceId,
         item,
+        updatedBy: session.user,
       },
     });
   };

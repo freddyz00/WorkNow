@@ -1,5 +1,6 @@
 import clientPromise from "../../lib/mongodb";
 import { ObjectId } from "mongodb";
+import { pusher } from "../../lib/pusher";
 
 export default async function handler(req, res) {
   if (req.method === "PUT") {
@@ -9,9 +10,27 @@ export default async function handler(req, res) {
       oldListsOrderIds,
       sourceIndex,
       destinationIndex,
+      updatedBy,
     } = req.body;
     const client = await clientPromise;
     const db = client.db();
+
+    // dispatch(
+    //   updateListsOrder({
+    //     draggableId,
+    //     sourceIndex: source.index,
+    //     destinationIndex: destination.index,
+    //   })
+    // );
+
+    pusher.trigger("private-workspaces", "update-lists-order", {
+      order: {
+        draggableId,
+        sourceIndex,
+        destinationIndex,
+      },
+      updatedBy,
+    });
 
     oldListsOrderIds.splice(sourceIndex, 1);
     oldListsOrderIds.splice(destinationIndex, 0, draggableId);
