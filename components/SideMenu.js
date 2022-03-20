@@ -6,6 +6,7 @@ import { BsKanban, BsFillChatLeftDotsFill } from "react-icons/bs";
 import { RiTeamFill } from "react-icons/ri";
 import { useRouter } from "next/router";
 import Select from "react-select";
+import Link from "next/link";
 
 const SideMenuItem = ({ title, selected, icon }) => {
   const dispatch = useDispatch();
@@ -50,10 +51,15 @@ export default function SideMenu() {
 
   return (
     <div className="flex flex-col items-center md:items-stretch h-screen border-solid border-[#EEEEEE] border-r-2">
-      <p className="font-righteous text-2xl mt-3 self-center hidden md:inline">
-        <span className="text-yellow-500">Work</span>
-        <span className="text-pink-500">Now</span>
-      </p>
+      <Link href="/dashboard">
+        <a className="mt-3 self-center hidden md:inline">
+          <p className="font-righteous text-2xl">
+            <span className="text-yellow-500">Work</span>
+            <span className="text-pink-500">Now</span>
+          </p>
+        </a>
+      </Link>
+
       <Select
         options={selectOptions}
         onChange={handleChange}
