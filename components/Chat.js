@@ -84,7 +84,7 @@ export default function Chat({ data }) {
   return (
     <div className="flex-1 overflow-y-auto">
       {/* chat body */}
-      <section className="flex flex-col px-20 pb-10 pt-5 mb-3 w-full">
+      <section className="flex flex-col px-5 md:px-20 pb-10 pt-5 mb-3 w-full">
         {data.map(({ text, sender }, index) => {
           const lastMessage = data.length - 1 === index;
           return (
@@ -96,7 +96,6 @@ export default function Chat({ data }) {
               <Message
                 text={text}
                 sender={sender}
-                // isUserSender={false}
                 isUserSender={sender.email === user.email}
               />
             </div>
@@ -106,7 +105,7 @@ export default function Chat({ data }) {
       {/* chat input */}
       <form
         onSubmit={sendMessage}
-        className="absolute bottom-5 right-20 left-20"
+        className="absolute bottom-5 right-5 left-5 md:right-20 md:left-20"
       >
         <input
           type="text"

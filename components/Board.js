@@ -109,10 +109,6 @@ export default function Board() {
             })}
             {provided.placeholder}
             <NewList />
-            <Button
-              title="Sign Out"
-              onPress={() => signOut({ callbackUrl: "/dashboard" })}
-            />
           </div>
         )}
       </Droppable>

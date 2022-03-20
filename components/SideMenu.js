@@ -13,7 +13,7 @@ const SideMenuItem = ({ title, selected, icon }) => {
     <div
       onClick={() => dispatch(setSelectedTab(title))}
       className={cn(
-        "flex items-center mx-3 mb-1.5 p-2 px-3 rounded-lg cursor-pointer transition",
+        "flex items-center mx-3 mb-1.5 py-2 px-2 md:px-3 rounded-lg cursor-pointer transition",
         {
           "bg-rose-400": selected,
           "hover:bg-slate-200": !selected,
@@ -22,7 +22,7 @@ const SideMenuItem = ({ title, selected, icon }) => {
     >
       {icon}
       <p
-        className={cn("ml-3 transition", {
+        className={cn("ml-3 transition hidden md:inline", {
           "text-gray-500": !selected,
           "text-white": selected,
         })}
@@ -49,8 +49,8 @@ export default function SideMenu() {
   }));
 
   return (
-    <div className="flex flex-col h-screen border-solid border-[#EEEEEE] border-r-2">
-      <p className="font-righteous text-2xl mt-3 self-center">
+    <div className="flex flex-col items-center md:items-stretch h-screen border-solid border-[#EEEEEE] border-r-2">
+      <p className="font-righteous text-2xl mt-3 self-center hidden md:inline">
         <span className="text-yellow-500">Work</span>
         <span className="text-pink-500">Now</span>
       </p>
@@ -62,24 +62,13 @@ export default function SideMenu() {
           selectOptions.filter((option) => option.value === workspaceId)[0]
         }
       />
-      {/* 
-      <select
-        onChange={handleChange}
-        className="text-lg font-medium mx-3 my-3 p-2  rounded-md cursor-pointer bg-slate-100 hover:bg-slate-200"
-      >
-        {workspaces.map((workspace) => (
-          <option value={workspace.id} selected={workspace.id === workspaceId}>
-            {workspace.title}
-          </option>
-        ))}
-      </select> */}
 
       <SideMenuItem
         title="Board"
         selected={selectedTab === "Board"}
         icon={
           <BsKanban
-            className={cn({
+            className={cn("text-2xl md:text-base", {
               "text-gray-500": selectedTab !== "Board",
               "text-white": selectedTab === "Board",
             })}
@@ -91,7 +80,7 @@ export default function SideMenu() {
         selected={selectedTab === "Team"}
         icon={
           <RiTeamFill
-            className={cn({
+            className={cn("text-2xl md:text-base", {
               "text-gray-500": selectedTab !== "Team",
               "text-white": selectedTab === "Team",
             })}
@@ -103,7 +92,7 @@ export default function SideMenu() {
         selected={selectedTab === "Chat"}
         icon={
           <BsFillChatLeftDotsFill
-            className={cn({
+            className={cn("text-2xl md:text-base", {
               "text-gray-500": selectedTab !== "Chat",
               "text-white": selectedTab === "Chat",
             })}

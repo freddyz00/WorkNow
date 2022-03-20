@@ -39,7 +39,7 @@ export default function Team({ members }) {
   };
 
   return (
-    <div className="p-3 grid grid-cols-5 gap-3 bg-neutral-100 h-full overflow-y-scroll">
+    <div className="p-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 bg-neutral-100 h-full overflow-y-scroll">
       {/* add a member */}
       <MemberCard>
         <div

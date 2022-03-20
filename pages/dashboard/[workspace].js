@@ -130,7 +130,7 @@ export default function Workspace({
         <title>WorkNow</title>
       </Head>
 
-      <div className="w-1/6">
+      <div className="w-20 md:w-1/6">
         <SideMenu />
       </div>
 
