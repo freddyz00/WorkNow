@@ -69,7 +69,7 @@ export default function Dashboard({ _session, workspaces }) {
       </Head>
 
       <DashboardHeader user={_session.user} />
-      <div className="grid grid-cols-4 bg-neutral-100 h-full">
+      <div className="grid grid-cols-4 bg-neutral-100">
         {workspaces.map(({ id, title, theme }) => (
           <WorkspaceCard id={id} key={id} title={title} theme={theme} />
         ))}
