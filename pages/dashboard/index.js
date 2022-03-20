@@ -34,7 +34,8 @@ export default function Dashboard({ _session, workspaces }) {
     setWorkSpaceColor(darkColorGenerator.generate());
   };
 
-  const createNewWorkspace = async () => {
+  const createNewWorkspace = async (e) => {
+    e.preventDefault();
     if (workspaceInput) {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/workspace`,
@@ -63,13 +64,14 @@ export default function Dashboard({ _session, workspaces }) {
   if (!_session) return <Loading />;
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-full bg-neutral-100">
       <Head>
         <title>WorkNow</title>
       </Head>
 
       <DashboardHeader user={_session.user} />
-      <div className="grid grid-cols-4 bg-neutral-100">
+
+      <div className="grid grid-cols-4">
         {workspaces.map(({ id, title, theme }) => (
           <WorkspaceCard id={id} key={id} title={title} theme={theme} />
         ))}
@@ -80,6 +82,7 @@ export default function Dashboard({ _session, workspaces }) {
           showModal={() => setIsModalOpen(true)}
         />
       </div>
+
       <ReactModal
         isOpen={isModalOpen}
         onRequestClose={handleCloseModal}

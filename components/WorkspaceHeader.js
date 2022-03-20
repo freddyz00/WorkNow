@@ -1,5 +1,5 @@
+import { signOut } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
 import { useSelector } from "react-redux";
 
 export default function WorkspaceHeader({ user }) {
@@ -15,6 +15,7 @@ export default function WorkspaceHeader({ user }) {
           width="30"
           height="30"
           className="rounded-full cursor-pointer"
+          onClick={() => signOut({ callbackUrl: "/" })}
         />
       </div>
     </div>

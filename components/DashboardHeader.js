@@ -1,8 +1,9 @@
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 
 export default function DashboardHeader({ user }) {
   return (
-    <div className="grid grid-cols-3 items-center px-5 py-2 border-solid border-[#EEEEEE] border-b-2 shadow-sm">
+    <div className="grid grid-cols-3 items-center px-5 py-2 bg-white border-solid border-[#EEEEEE] border-b-2 shadow-sm">
       <p className="font-righteous text-xl justify-self-start">
         <span className="text-yellow-500">Work</span>
         <span className="text-pink-500">Now</span>
@@ -16,6 +17,7 @@ export default function DashboardHeader({ user }) {
           width="30"
           height="30"
           className="rounded-full cursor-pointer"
+          onClick={() => signOut({ callbackUrl: "/" })}
         />
       </div>
     </div>

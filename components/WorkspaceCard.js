@@ -26,7 +26,7 @@ export default function WorkspaceCard({
       className={cn(
         "card flex shrink-0 justify-center items-center h-40 m-5 px-5 rounded-lg shadow-md cursor-pointer",
         {
-          "bg-gray-200": newWorkspace,
+          "bg-slate-50 hover:bg-slate-200": newWorkspace,
           "bg-white": !newWorkspace,
         }
       )}
@@ -34,6 +34,7 @@ export default function WorkspaceCard({
       <p
         className={cn("text-2xl font-medium p-5", {
           "border-l-4 border-solid line": !newWorkspace,
+          "text-gray-500": newWorkspace,
         })}
       >
         {title}
@@ -49,25 +50,5 @@ export default function WorkspaceCard({
         }
       `}</style>
     </div>
-    // <div
-    //   onClick={handlePress}
-    //   className={
-    //     "card flex shrink-0 justify-center items-center h-40 m-5 rounded-lg shadow-md cursor-pointer"
-    //   }
-    // >
-    //   <p
-    //     className={cn("text-2xl font-semibold text-center px-5", {
-    //       "text-white": !newWorkspace,
-    //     })}
-    //   >
-    //     {title}
-    //   </p>
-
-    //   <style jsx>{`
-    //     .card {
-    //       background-color: ${theme};
-    //     }
-    //   `}</style>
-    // </div>
   );
 }
