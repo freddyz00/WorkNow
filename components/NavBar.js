@@ -6,12 +6,12 @@ export default function NavBar({ navRef }) {
   return (
     <nav
       ref={navRef}
-      className="h-16 w-full flex flex-row justify-between items-center px-20 fixed top-0 transition-background duration-300 z-10"
+      className="px-5 md:px-16 lg:px-24 h-16 w-full flex flex-row justify-between items-center sm:fixed top-0  transition-background duration-300 z-10"
     >
       <div>
         <Link href="/">
           <a>
-            <h1 className="font-righteous text-3xl">
+            <h1 className="font-righteous text-2xl sm:text-3xl">
               <span className="text-yellow-500">Work</span>
               <span className="text-pink-500">Now</span>
             </h1>

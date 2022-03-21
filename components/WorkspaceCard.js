@@ -7,13 +7,15 @@ export default function WorkspaceCard({
   theme,
   newWorkspace,
   showModal,
+  setLoading,
 }) {
   const router = useRouter();
 
-  const hoverColor = `${theme.slice(0, -1)}, 0.1)`;
+  const hoverColor = `${theme.slice(0, -1)}, 0.2)`;
 
   const handlePress = () => {
     if (!newWorkspace) {
+      setLoading(true);
       router.push(`/dashboard/${id}`);
     } else {
       // show modal to create new workspace

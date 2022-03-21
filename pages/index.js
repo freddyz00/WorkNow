@@ -46,7 +46,7 @@ export default function Home({ _session }) {
 
       {/* view on page load */}
       <section className="flex h-screen py-12 bg-gradient-to-t from-violet-100 to-white justify-center mb-28">
-        <div className="container h-full columns-1 md:columns-2">
+        <div className="container h-full grid grid-cols-1 md:grid-cols-2">
           {/* left */}
           <div className="flex flex-col justify-center items-start h-full w-full pl-24 pr-12">
             <h1 className="text-3xl md:text-5xl font-semibold leading-snug my-5">
@@ -96,8 +96,8 @@ export default function Home({ _session }) {
 
       <Fade bottom>
         <section className="container mx-auto grid grid-cols-1 md:grid-cols-2 mb-28 place-items-center">
-          <div className="justify-self-center md:ml-20">
-            <p className="text-3xl font-semibold mb-5 text-center md:text-left">
+          <div className="justify-self-center mx-10 md:mx-auto md:ml-20">
+            <p className="text-3xl font-semibold text-center mb-5 md:text-left">
               Boost your productivity by keeping track of your tasks
             </p>
             <p className="text-xl text-justify m-5 md:m-0">
@@ -120,7 +120,7 @@ export default function Home({ _session }) {
               width="350"
             />
           </div>
-          <div className="justify-self-center md:mr-20 order-0 md:order-1">
+          <div className="justify-self-center mx-10 md:mx-auto md:mr-20 order-0 md:order-1">
             <p className="text-3xl font-semibold mb-5 text-center md:text-left">
               Seamless communication between your team
             </p>

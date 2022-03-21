@@ -24,6 +24,7 @@ export default function Dashboard({ _session, workspaces }) {
   const [workspaceColor, setWorkSpaceColor] = useState(
     darkColorGenerator.generate()
   );
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ export default function Dashboard({ _session, workspaces }) {
       );
       handleCloseModal();
 
+      setLoading(true);
       router.push(`/dashboard/${res.data.id}`);
     }
   };
@@ -64,16 +66,24 @@ export default function Dashboard({ _session, workspaces }) {
   if (!_session) return <Loading />;
 
   return (
-    <div className="flex flex-col h-full bg-neutral-100">
+    <div className="flex flex-col h-screen bg-neutral-100">
       <Head>
         <title>WorkNow</title>
       </Head>
+
+      {loading && <Loading />}
 
       <DashboardHeader user={_session.user} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {workspaces.map(({ id, title, theme }) => (
-          <WorkspaceCard id={id} key={id} title={title} theme={theme} />
+          <WorkspaceCard
+            id={id}
+            key={id}
+            title={title}
+            theme={theme}
+            setLoading={setLoading}
+          />
         ))}
         <WorkspaceCard
           title="Create a workspace"

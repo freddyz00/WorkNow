@@ -54,7 +54,7 @@ export default function Testimonials() {
 
   return (
     <section className="container mx-auto mb-28">
-      <h3 className="text-3xl font-semibold text-center mb-10">
+      <h3 className="text-3xl font-semibold text-center mb-10 mx-10 md:mx-auto">
         See What People Are Saying About WorkNow
       </h3>
       <div className="mx-auto h-72 bg-blue-100 rounded-2xl overflow-hidden relative group mx-5 md:mx-0">

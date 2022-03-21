@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 import Button from "../components/Button";
 
@@ -8,12 +9,12 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const signIn = (e) => {
+  const signUp = (e) => {
     e.preventDefault();
   };
 
-  const signInWithGoogle = (e) => {
-    e.preventDefault();
+  const signInWithGoogle = () => {
+    signIn("google", { callbackUrl: "/dashboard" });
   };
 
   return (
@@ -30,7 +31,7 @@ export default function Login() {
             </h1>
           </a>
         </Link>
-        <div className="flex flex-col w-1/3 p-14 border-2 border-slate-200 border-solid rounded-md shadow-[0_0px_5px_0px_rgba(0,0,0,0.1)]">
+        <div className="flex flex-col lg:w-1/3 p-14 border-2 border-slate-200 border-solid rounded-md shadow-[0_0px_5px_0px_rgba(0,0,0,0.1)]">
           <form className="flex flex-col mb-8">
             <h2 className="text-center mb-5 font-bold text-xl">
               Sign up for an account
@@ -61,7 +62,7 @@ export default function Login() {
               title="Sign Up"
               extraStyle="py-2"
               type="primary"
-              onPress={signIn}
+              onPress={signUp}
             />
             <p className="text-right text-sm mt-2">
               Already have an account?{" "}

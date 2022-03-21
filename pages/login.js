@@ -4,12 +4,15 @@ import { signIn } from "next-auth/react";
 
 import Button from "../components/Button";
 import Head from "next/head";
+import Loading from "../components/Loading";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const signInWithGoogle = () => {
+    setLoading(true);
     signIn("google", { callbackUrl: "/dashboard" });
   };
 
@@ -18,6 +21,9 @@ export default function Login() {
       <Head>
         <title>Login</title>
       </Head>
+
+      {loading && <Loading />}
+
       <div className="flex flex-col justify-center items-center my-10">
         <Link href="/">
           <a>
@@ -27,7 +33,7 @@ export default function Login() {
             </h1>
           </a>
         </Link>
-        <div className="flex flex-col w-1/3 p-14 border-2 border-slate-200 border-solid rounded-md shadow-[0_0px_5px_0px_rgba(0,0,0,0.1)]">
+        <div className="flex flex-col lg:w-1/3 p-14 border-2 border-slate-200 border-solid rounded-md shadow-[0_0px_5px_0px_rgba(0,0,0,0.1)]">
           <form className="flex flex-col mb-8">
             <h2 className="text-center mb-5 font-bold text-xl">
               Sign in to your account
