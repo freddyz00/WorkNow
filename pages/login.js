@@ -10,10 +10,18 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const signInWithGoogle = () => {
     setLoading(true);
     signIn("google", { callbackUrl: "/dashboard" });
+  };
+
+  const login = (e) => {
+    e.preventDefault();
+    setErrorMsg(
+      "Signing in with email and password is currently unavailable. Please sign in with google."
+    );
   };
 
   return (
@@ -63,8 +71,13 @@ export default function Login() {
               title="Sign In"
               extraStyle="py-2"
               type="primary"
-              onPress={signIn}
+              onPress={login}
             />
+            {errorMsg && (
+              <p className="text-sm text-center mt-2 text-red-500">
+                {errorMsg}
+              </p>
+            )}
             <p className="text-right text-sm mt-2">
               Don't have an account?{" "}
               <Link href="/signup">

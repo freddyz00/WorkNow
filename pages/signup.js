@@ -4,16 +4,24 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 
 import Button from "../components/Button";
+import Loading from "../components/Loading";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const signUp = (e) => {
     e.preventDefault();
+    setErrorMsg(
+      "Signing up with email and password is currently unavailable. Please sign in with google."
+    );
   };
 
   const signInWithGoogle = () => {
+    setLoading(true);
+
     signIn("google", { callbackUrl: "/dashboard" });
   };
 
@@ -22,6 +30,9 @@ export default function Login() {
       <Head>
         <title>Sign Up</title>
       </Head>
+
+      {loading && <Loading />}
+
       <div className="flex flex-col justify-center items-center my-10">
         <Link href="/">
           <a>
@@ -64,6 +75,11 @@ export default function Login() {
               type="primary"
               onPress={signUp}
             />
+            {errorMsg && (
+              <p className="text-sm text-center mt-2 text-red-500">
+                {errorMsg}
+              </p>
+            )}
             <p className="text-right text-sm mt-2">
               Already have an account?{" "}
               <Link href="/login">
