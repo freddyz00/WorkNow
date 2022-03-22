@@ -53,8 +53,8 @@ export default function Home({ _session }) {
               Collaboration Made Simple.
             </h1>
             <p className="text-lg md:text-xl mb-5">
-              Manage all of your organization's projects, tasks, and activities.
-              All your members, All in one place.
+              Manage all of your organization&apos;s projects, tasks, and
+              activities. All your members, All in one place.
             </p>
             <Link href="/signup">
               <a>
@@ -147,20 +147,20 @@ export default function Home({ _session }) {
             <p>© Copyright 2022. All rights reserved.</p>
           </div>
           <div className="flex flex-col sm:flex-row items-center">
-            <a href="/">
+            <a>
               <p className="ml-5 hover:text-blue-700 hover:underline">
                 About us
               </p>
             </a>
-            <a href="/">
+            <a>
               <p className="ml-5 hover:text-blue-700 hover:underline">
                 Contact us
               </p>
             </a>
-            <a href="/">
+            <a>
               <p className="ml-5 hover:text-blue-700 hover:underline">Help</p>
             </a>
-            <a href="/">
+            <a>
               <p className="ml-5 hover:text-blue-700 hover:underline">
                 Privacy
               </p>

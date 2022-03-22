@@ -25,9 +25,9 @@ const TestimonialCard = ({ name, content }) => {
   return (
     <div className="w-1/3 h-full flex flex-col justify-center px-20 items-center shrink-0">
       <p className="text-2xl font-medium mb-5 relative text-indigo-900">
-        <span className="absolute -left-2">"</span>
+        <span className="absolute -left-2">&quot;</span>
         {content}
-        <span>"</span>
+        <span>&quot;</span>
       </p>
       <h4 className="text-lg self-end text-indigo-900">{`- ${name}`}</h4>
     </div>

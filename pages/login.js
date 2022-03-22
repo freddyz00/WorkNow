@@ -79,7 +79,7 @@ export default function Login() {
               </p>
             )}
             <p className="text-right text-sm mt-2">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link href="/signup">
                 <a className="text-blue-800">Sign Up</a>
               </Link>
