@@ -17,6 +17,7 @@ import ReactModal from "react-modal";
 
 import axios from "axios";
 import clientPromise from "../../lib/mongodb";
+import { ObjectId } from "mongodb";
 
 export default function Dashboard({ _session, workspaces }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -170,9 +171,39 @@ export async function getServerSideProps(context) {
     const client = await clientPromise;
     const db = await client.db();
 
-    const user = await db
+    let user = await db
       .collection("users")
       .findOne({ email: session.user.email });
+
+    if (!user.workspaces) {
+      await db.collection("users").updateOne(
+        { email: user.email },
+        {
+          $push: {
+            workspaces: {
+              title: "Demo Workspace",
+              theme: "rgb(232, 121, 249)",
+              id: "6239d591bc2980c4c67e54e5",
+            },
+          },
+        }
+      );
+
+      await db.collection("workspaces").updateOne(
+        {
+          _id: ObjectId("6239d591bc2980c4c67e54e5"),
+        },
+        {
+          $push: {
+            members: { name: user.name, email: user.email, image: user.image },
+          },
+        }
+      );
+
+      user = await db
+        .collection("users")
+        .findOne({ email: session.user.email });
+    }
 
     const workspaces = user.workspaces || [];
 
