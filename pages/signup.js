@@ -26,14 +26,14 @@ export default function Login() {
   };
 
   return (
-    <div className="h-full grid bg-slate-50">
+    <div className="h-screen grid bg-slate-50">
       <Head>
         <title>Sign Up</title>
       </Head>
 
       {loading && <Loading />}
 
-      <div className="flex flex-col justify-center items-center my-10">
+      <div className="flex flex-col justify-start items-center my-10">
         <Link href="/">
           <a>
             <h1 className="font-righteous text-3xl mb-8">
@@ -42,7 +42,7 @@ export default function Login() {
             </h1>
           </a>
         </Link>
-        <div className="flex flex-col lg:w-1/3 p-14 border-2 border-slate-200 border-solid rounded-md shadow-[0_0px_5px_0px_rgba(0,0,0,0.1)]">
+        <div className="flex flex-col w-11/12 sm:w-1/2 lg:w-1/3 p-14 border-2 border-slate-200 border-solid rounded-md shadow-[0_0px_5px_0px_rgba(0,0,0,0.1)]">
           <form className="flex flex-col mb-8">
             <h2 className="text-center mb-5 font-bold text-xl">
               Sign up for an account
@@ -76,9 +76,7 @@ export default function Login() {
               onPress={signUp}
             />
             {errorMsg && (
-              <p className="text-sm text-center mt-2 text-red-500">
-                {errorMsg}
-              </p>
+              <p className="text-sm mt-2 text-red-500">{errorMsg}</p>
             )}
             <p className="text-right text-sm mt-2">
               Already have an account?{" "}
