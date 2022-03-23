@@ -48,7 +48,7 @@ export default function Home({ _session }) {
       <section className="flex h-screen py-12 bg-gradient-to-t from-violet-100 to-white justify-center mb-28">
         <div className="container h-full grid grid-cols-1 md:grid-cols-2">
           {/* left */}
-          <div className="flex flex-col justify-center items-start h-full w-full px-20">
+          <div className="flex flex-col justify-center items-start h-full w-full px-10 md:px-20">
             <h1 className="text-3xl md:text-5xl text-center md:text-left font-semibold leading-snug my-5">
               Collaboration Made Simple.
             </h1>
@@ -57,7 +57,7 @@ export default function Home({ _session }) {
               activities. All your members, All in one place.
             </p>
             <Link href="/signup">
-              <a>
+              <a className="self-center">
                 <Button title="Get started for free" large type="primary" />
               </a>
             </Link>
@@ -77,14 +77,14 @@ export default function Home({ _session }) {
 
       <Fade bottom>
         <section className="container mx-auto mb-28">
-          <h2 className="text-3xl font-semibold mx-20 text-center mb-5">
+          <h2 className="text-3xl font-semibold mx-10 md:mx-20 text-center mb-5">
             Keep all your work neat, clean, and organized.
           </h2>
-          <p className="mx-20 text-xl text-center mb-5">
+          <p className="mx-10 md:mx-20 text-xl text-center mb-5">
             Achieve greater work efficiency by integrating different tools into
             your workflow
           </p>
-          <div className="mx-20 text-center ">
+          <div className="mx-20 text-center">
             <Link href="/signup">
               <a>
                 <Button title="Start Working" type="primary" large />
