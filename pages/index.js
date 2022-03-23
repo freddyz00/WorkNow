@@ -48,7 +48,7 @@ export default function Home({ _session }) {
       <section className="flex h-screen py-12 bg-gradient-to-t from-violet-100 to-white justify-center mb-28">
         <div className="container h-full grid grid-cols-1 md:grid-cols-2">
           {/* left */}
-          <div className="flex flex-col justify-center items-start h-full w-full pl-24 pr-12">
+          <div className="flex flex-col justify-center items-start h-full w-full px-20">
             <h1 className="text-3xl md:text-5xl font-semibold leading-snug my-5">
               Collaboration Made Simple.
             </h1>
