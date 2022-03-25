@@ -60,7 +60,7 @@ export default function Workspace({
   useEffect(() => {
     if (_session) {
       const pusher = new Pusher(process.env.NEXT_PUBLIC_CHANNELS_KEY, {
-        authEndpoint: "http://localhost:3000/api/pusher/auth",
+        authEndpoint: `${process.env.NEXT_PUBLIC_BASE_URL}/api/pusher/auth`,
         cluster: process.env.NEXT_PUBLIC_CHANNELS_CLUSTER,
       });
 
