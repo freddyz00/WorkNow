@@ -57,7 +57,7 @@ export default function Home({ _session }) {
               activities. All your members, All in one place.
             </p>
             <Link href="/signup">
-              <a className="self-center">
+              <a className="self-start">
                 <Button title="Get started for free" large type="primary" />
               </a>
             </Link>
