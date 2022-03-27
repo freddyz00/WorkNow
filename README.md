@@ -1,3 +1,5 @@
+# WorkNow
+
 ![Project Demo](public/images/demo.gif)
 
 ## Project Description
@@ -8,7 +10,7 @@ workflow much more efficient. It allows for real-time
 communication between members working on the same project, i.e.
 real-time updates on the board and the chat functionality.
 
-The app is running live at [https://work-now.vercel.app](https://work-now.vercel.app, and details about the project can be found at www.someurl.com
+The app is running live at [https://work-now.vercel.app](https://work-now.vercel.app), and details about the project can be found at [https://freddyzhao.herokuapp.com/worknow](https://freddyzhao.herokuapp.com/worknow).
 
 ## Running The App
 
